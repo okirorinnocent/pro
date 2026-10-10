@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Innocent Okiror | Computer Science & AI</title>
+<meta name="description" content="Innocent Okiror, BSc Computer Science student at MUST, Uganda. AI and machine learning projects, Python apps, and a way to get in touch.">
+<meta property="og:title" content="Innocent Okiror | Computer Science & AI">
+<meta property="og:description" content="Computer Science student building AI assistants, ML apps and data pipelines in Uganda.">
+<meta property="og:image" content="profile.png">
+<meta name="theme-color" content="#4338ca">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b1f2a;--muted:#5b6275;--line:#e3e6ee;--accent:#4338ca;--on:#fff;--chip:#e8e9fb;--k:#000;--y:#fcdc04;--r:#d90000;--bd:'Bricolage Grotesque',Georgia,serif;--bf:'Figtree',system-ui,sans-serif}
+:root[data-theme=dark]{--bg:#0d1020;--card:#151a30;--ink:#e8eaf2;--muted:#99a1b8;--line:#252b45;--accent:#9094ff;--on:#0d1020;--chip:#212654;--k:#3a3f55}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--ink);font:400 1.02rem/1.65 var(--bf);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.stripe{height:5px;background:linear-gradient(90deg,var(--k) 0 33.3%,var(--y) 33.3% 66.6%,var(--r) 66.6%)}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:6px;height:64px}
+.brand{font:800 1.3rem var(--bd);text-decoration:none;margin-right:auto;letter-spacing:-.02em}
+nav a.l{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:500;font-size:.95rem;color:var(--muted)}
+nav a.l:hover{color:var(--ink);background:var(--chip)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;border:1.5px solid var(--accent);background:var(--accent);color:var(--on);font:600 .95rem var(--bf);text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.o{background:transparent;color:var(--accent)}
+.ico{width:42px;height:42px;padding:0;justify-content:center;background:transparent;color:var(--ink);border-color:var(--line)}
+@media(max-width:860px){nav a.l{display:none}}
+.hero{position:relative;overflow:hidden;padding:72px 0 64px}
+#net{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hg{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+@media(max-width:860px){.hg{grid-template-columns:1fr}.hero{padding-top:40px}}
+.hero .in{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.hero .in2{animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.badge{display:inline-block;padding:6px 14px;border-radius:99px;background:var(--chip);color:var(--accent);font-weight:600;font-size:.85rem;margin-bottom:18px}
+h1{font:800 clamp(2.8rem,8vw,5.4rem)/.98 var(--bd);letter-spacing:-.035em}
+.role{font:500 clamp(1.2rem,3vw,1.6rem) var(--bd);color:var(--accent);margin:16px 0 14px;min-height:2em;transition:opacity .3s}
+.lead{color:var(--muted);max-width:52ch;font-size:1.08rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 22px}
+.soc{display:flex;flex-wrap:wrap;gap:8px}
+.soc a{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.88rem;font-weight:500;text-decoration:none;background:var(--card)}
+.soc a:hover{border-color:var(--accent);color:var(--accent)}
+.photo{position:relative;max-width:380px;margin-left:auto}
+.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:24px 24px 0 0;border:1px solid var(--line);background:var(--card)}
+.photo .stripe{height:12px;border-radius:0 0 24px 24px}
+@media(max-width:860px){.photo{margin:0;max-width:300px}}
+.stats{background:var(--card);border-block:1px solid var(--line)}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:26px 0}
+@media(max-width:700px){.sg{grid-template-columns:repeat(2,1fr)}}
+.sg b{display:block;font:800 2rem var(--bd);letter-spacing:-.02em}
+.sg span{color:var(--muted);font-size:.9rem}
+section{padding:84px 0 12px}
+h2{font:800 clamp(1.9rem,4.5vw,2.8rem)/1.05 var(--bd);letter-spacing:-.03em;margin-bottom:10px}
+.sub{color:var(--muted);max-width:60ch;margin-bottom:34px}
+.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.shot{aspect-ratio:16/9;background:linear-gradient(135deg,var(--accent),#2b2f8f);color:#fff;display:grid;place-items:center;font:800 1.1rem var(--bd);padding:14px;text-align:center;position:relative;overflow:hidden}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cb{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.cb h3{font:800 1.25rem/1.2 var(--bd);letter-spacing:-.01em}
+.cat{color:var(--accent);font-weight:600;font-size:.88rem}
+.cb p{color:var(--muted);font-size:.96rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{background:var(--chip);color:var(--accent);padding:3px 11px;border-radius:99px;font-size:.78rem;font-weight:600}
+.acts{display:flex;gap:10px;margin-top:auto;padding-top:6px}
+.acts .btn{padding:8px 16px;font-size:.88rem}
+.two{display:grid;grid-template-columns:1.3fr .7fr;gap:44px;align-items:start}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.two p{margin-bottom:16px;max-width:62ch}
+.two img.sc{width:100%;border-radius:18px;border:1px solid var(--line);display:block}
+.cap{color:var(--muted);font-size:.85rem;margin-top:8px}
+h3.h{font:800 1.25rem var(--bd);margin:30px 0 14px}
+.tl{border-left:2px solid var(--line);margin-left:6px;padding-left:24px}
+.ti{position:relative;margin-bottom:20px}
+.ti:before{content:"";position:absolute;left:-32px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--chip)}
+.ti b{display:block}.ti span{color:var(--muted);font-size:.93rem}
+.now{background:#16a34a;color:#fff!important;border-radius:99px;padding:1px 9px;font-size:.7rem!important;font-weight:700;margin-left:8px}
+.cols{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.col{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.col h3{font:800 1.15rem var(--bd);margin-bottom:4px}
+.col small{color:var(--muted);display:block;margin-bottom:14px}
+.col ul{list-style:none;padding:0;display:grid;gap:8px}
+.col li{padding:9px 12px;background:var(--bg);border-radius:10px;font-weight:500;font-size:.95rem}
+.svc .ic{font-size:1.8rem}
+.svc h3{font:800 1.1rem var(--bd);margin:8px 0 4px}.svc p{color:var(--muted);font-size:.94rem}
+form{display:grid;gap:12px}
+label{font-weight:600;font-size:.9rem}
+input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+input:focus,textarea:focus{border-color:var(--accent)}
+textarea{min-height:110px;resize:vertical}
+.hp{position:absolute;left:-9999px}
+.note{font-size:.9rem;min-height:1.3em}
+.ok{color:#16a34a}.er{color:#dc2626}
+.msgs{display:grid;gap:10px;margin-top:20px;max-height:340px;overflow:auto}
+.msg{background:var(--bg);border-radius:12px;padding:12px 14px}
+.msg b{font-size:.92rem}.msg small{color:var(--muted);margin-left:8px}
+.msg p{margin-top:4px;font-size:.94rem}
+footer{margin-top:90px;border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<header><div class="wrap"><nav aria-label="Main">
+<a class="brand" href="#top">Innocent Okiror</a>
+<a class="l" href="#projects">Projects</a><a class="l" href="#about">About</a><a class="l" href="#skills">Skills</a><a class="l" href="#guestbook">Guestbook</a><a class="l" href="#contact">Contact</a>
+<button class="btn ico" id="theme" aria-label="Toggle dark mode">🌙</button>
+</nav></div></header>
+
+<main id="top">
+<div class="hero"><canvas id="net" aria-hidden="true"></canvas>
+<div class="wrap hg">
+<div class="in">
+<span class="badge">BSc Computer Science · MUST, Uganda</span>
+<h1>Innocent Okiror</h1>
+<p class="role" id="role">Computer Science Student</p>
+<p class="lead">I build AI assistants, machine learning apps and data pipelines, and I'm learning to make them secure and dependable for businesses in Uganda and beyond.</p>
+<div class="cta"><a class="btn" href="#projects">See my work</a><a class="btn o" href="my_cv.pdf" download="Innocent_Okiror_CV.pdf">Download CV</a></div>
+<div class="soc" id="soc"></div>
+</div>
+<div class="photo in in2"><img src="profile.png" alt="Portrait of Innocent Okiror" width="380" height="475"><div class="stripe"></div></div>
+</div></div>
+
+<div class="stats"><div class="wrap sg" id="stats">
+<div><b>3</b><span>Live deployed apps</span></div>
+<div><b id="s-repos">–</b><span>Public GitHub repos</span></div>
+<div><b id="s-stars">–</b><span>GitHub stars</span></div>
+<div><b id="s-langs" style="font-size:1.15rem;padding-top:12px">Python, C</b><span>Main languages</span></div>
+</div></div>
+
+<section id="projects"><div class="wrap">
+<h2>Projects</h2><p class="sub">Working apps you can open right now. Each links to its source code.</p>
+<div class="grid" id="pgrid"></div></div></section>
+
+<section id="about"><div class="wrap two">
+<div>
+<h2>My journey</h2>
+<p>I'm studying Computer Science at <b>Mbarara University of Science and Technology (MUST)</b>. My foundation was built at <b>Teso College Aloet</b>, where I developed analytical discipline and logical thinking.</p>
+<p>After earning a <b>Certificate in Artificial Intelligence</b> from <b>Seeta University</b>, I now focus on machine learning, software architecture and cyber security, with the goal of building systems that protect data, automate workflows and empower businesses.</p>
+<h3 class="h">Education &amp; credentials</h3>
+<div class="tl">
+<div class="ti"><b>BSc Computer Science<span class="now">Now</span></b><span>Mbarara University of Science and Technology · 2026 to 2029</span></div>
+<div class="ti"><b>Certificate in Artificial Intelligence</b><span>Seeta University</span></div>
+<div class="ti"><b>UACE &amp; UCE</b><span>Teso College Aloet</span></div>
+<div class="ti"><b>IoT, Wireless &amp; Cloud Computing Emerging Technologies</b><span>Yonsei University · Coursera</span></div>
+<div class="ti"><b>Gmail Certificate</b><span>Google Cloud · Coursera</span></div>
+<div class="ti"><b>Learning How to Learn</b><span>Deep Stacks · Coursera</span></div>
+<div class="ti"><b>Basic Information Literacy</b><span>State University of New York · Coursera / Credly</span></div>
+</div>
+<h3 class="h">Currently exploring</h3>
+<div class="tags" id="learn"></div>
+</div>
+<div><img class="sc" src="school.png" alt="Moments from university and the Global AI Community meetup" loading="lazy"><p class="cap">Campus life and the Global AI Community meetup.</p></div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+<h2>Skills</h2><p class="sub">Grouped by how far along I am, so you know what to expect.</p>
+<div class="cols" id="skgrid"></div>
+<h3 class="h" style="margin-top:44px">What I can build for you</h3>
+<div class="cols">
+<div class="col svc"><div class="ic">🤖</div><h3>AI assistants &amp; chatbots</h3><p>Gemini-powered assistants with custom personas and memory.</p></div>
+<div class="col svc"><div class="ic">📊</div><h3>ML web apps</h3><p>Trained models wrapped in clean, shareable web apps.</p></div>
+<div class="col svc"><div class="ic">🧪</div><h3>Data pipelines</h3><p>Cleaning, processing and predicting from CSV, Parquet and SQL data.</p></div>
+</div></div></section>
+
+<section id="guestbook"><div class="wrap">
+<h2>Guestbook</h2><p class="sub">Leave a short note. It appears here for the next visitor.</p>
+<div class="two" style="grid-template-columns:1fr 1fr">
+<form id="gform" novalidate>
+<label for="gn">Your name</label><input id="gn" maxlength="60" autocomplete="name">
+<label for="gm">Message</label><textarea id="gm" maxlength="400"></textarea>
+<input class="hp" id="gh" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn" type="submit">Post message</button><p class="note" id="gnote" role="status"></p>
+</form>
+<div class="msgs" id="msgs"><p class="sub">Loading messages…</p></div>
+</div></div></section>
+
+<section id="contact"><div class="wrap">
+<h2>Let's talk</h2><p class="sub">Internships, collaborations, or a project idea: send a message and I'll reply by email.</p>
+<div class="two" style="grid-template-columns:1fr 1fr">
+<form id="cform" novalidate>
+<label for="cn">Name</label><input id="cn" maxlength="80" autocomplete="name">
+<label for="ce">Email</label><input id="ce" type="email" maxlength="120" autocomplete="email">
+<label for="cm">Message</label><textarea id="cm" maxlength="1500"></textarea>
+<input class="hp" id="ch" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn" type="submit">Send message</button><p class="note" id="cnote" role="status"></p>
+</form>
+<div><p>Prefer a direct line? Reach me on WhatsApp or email. I'm based in Mbarara, Uganda.</p><div class="cta"><a class="btn" href="mailto:okirorinnocent49@gmail.com">Email me</a><a class="btn o" href="https://wa.me/256726278320" target="_blank" rel="noopener">WhatsApp</a></div></div>
+</div></div></section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="yr"></span> Innocent Okiror</span><span>Built with HTML, CSS and JavaScript · Hosted on Vercel</span></div></footer>
+
+<script>
+/* ===== EDIT ME ===== */
+const SB={url:"YOUR_SUPABASE_URL",key:"YOUR_SUPABASE_ANON_KEY"}; // Supabase > Settings > API (use the anon/public key ONLY)
+const GH="okirorinnocent";
+const ROLES=["BSc. Computer Science Student","AI & Machine Learning Enthusiast","Python & Streamlit Developer"];
+const SOCIALS=[["LinkedIn","https://www.linkedin.com/in/innocent-okiror-2793443b0"],["GitHub","https://github.com/"+GH],["WhatsApp","https://wa.me/256726278320"],["X","https://x.com/innocent_okiror"],["Email","mailto:okirorinnocent49@gmail.com"]];
+const PROJECTS=[
+{t:"OKIROR'S AI: Intelligent Workspace Companion",c:"Artificial Intelligence",d:"A dark-themed conversational AI assistant powered by Google Gemini, with customizable persona instructions and session history management.",k:["Python","Streamlit","Google GenAI SDK","CSS"],g:"https://github.com/okirorinnocent/4G",l:"https://evbmr2bmurgs3snobraabe.streamlit.app/",i:"assets/okiror_ai_1.png"},
+{t:"Weather Prediction ML Pipeline",c:"Machine Learning",d:"A Streamlit app that loads trained model artifacts (.pkl) with Joblib to deliver weather forecasts and feature inference.",k:["Python","Scikit-Learn","Joblib","Matplotlib","NumPy"],g:"https://github.com/okirorinnocent/model",l:"https://p4x9y2gikjoog9i4evnrkq.streamlit.app/",i:"assets/weather_1.png"},
+{t:"CASMI26 Molecule ID & Mass Spectra Predictor",c:"Machine Learning",d:"An end-to-end pipeline using Random Forest to process Parquet mass spectrometry data and predict SMILES molecular structures.",k:["Python","Scikit-Learn","Pandas","PyArrow","NumPy"],g:"https://github.com/okirorinnocent/KASUN",l:"https://mxyli76bszrcffkapu7bik.streamlit.app/",i:"assets/casmi_1.png"}];
+const SKILLS=[["Strongest","Where I'm most confident",["Prompt Engineering","Productivity Tools","AI Tools"]],["Growing","Used regularly, still improving",["Information Literacy","Office Suite","Git & GitHub","Web Apps (Streamlit)","Cloud & IoT Concepts"]],["Foundations","Early stage, actively learning",["Python Programming","C Programming"]]];
+const LEARN=["Machine Learning","Data Science","Cyber Security","Software Architecture"];
+/* ==================== */
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* theme */
+const root=document.documentElement;
+function setTheme(t){root.dataset.theme=t;$("#theme").textContent=t==="dark"?"☀️":"🌙"}
+setTheme(store.get("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
+$("#theme").onclick=()=>{const t=root.dataset.theme==="dark"?"light":"dark";store.set("theme",t);setTheme(t)};
+$("#yr").textContent=new Date().getFullYear();
+
+/* content */
+$("#soc").innerHTML=SOCIALS.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("");
+$("#learn").innerHTML=LEARN.map(x=>`<span>${x}</span>`).join("");
+$("#pgrid").innerHTML=PROJECTS.map(p=>`<article class="card"><div class="shot">${esc(p.c)}<img src="${p.i}" alt="Screenshot of ${esc(p.t)}" loading="lazy" onerror="this.remove()"></div><div class="cb"><span class="cat">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="tags">${p.k.map(x=>`<span>${esc(x)}</span>`).join("")}</div><div class="acts"><a class="btn" href="${p.l}" target="_blank" rel="noopener">Live demo</a><a class="btn o" href="${p.g}" target="_blank" rel="noopener">Source code</a></div></div></article>`).join("");
+$("#skgrid").innerHTML=SKILLS.map(([h,s,l])=>`<div class="col"><h3>${h}</h3><small>${s}</small><ul>${l.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("");
+
+/* rotating role */
+let ri=0;const roleEl=$("#role");roleEl.textContent=ROLES[0];
+if(!matchMedia("(prefers-reduced-motion:reduce)").matches)setInterval(()=>{roleEl.style.opacity=0;setTimeout(()=>{ri=(ri+1)%ROLES.length;roleEl.textContent=ROLES[ri];roleEl.style.opacity=1},300)},3200);
+
+/* GitHub live stats */
+fetch(`https://api.github.com/users/${GH}`).then(r=>r.json()).then(u=>{if(u.public_repos==null)throw 0;$("#s-repos").textContent=u.public_repos;
+return fetch(`https://api.github.com/users/${GH}/repos?per_page=100`).then(r=>r.json())}).then(rs=>{if(!Array.isArray(rs))throw 0;
+$("#s-stars").textContent=rs.reduce((a,r)=>a+(r.stargazers_count||0),0);
+const m={};rs.forEach(r=>r.language&&(m[r.language]=(m[r.language]||0)+1));
+const top=Object.keys(m).sort((a,b)=>m[b]-m[a]).slice(0,3);if(top.length)$("#s-langs").textContent=top.join(", ")}).catch(()=>{$("#s-repos").textContent="5+";$("#s-stars").textContent="–"});
+
+/* Supabase (REST, no library needed) */
+const sbOn=()=>!SB.url.startsWith("YOUR");
+async function sb(path,opt={}){const r=await fetch(SB.url+"/rest/v1/"+path,{...opt,headers:{apikey:SB.key,Authorization:"Bearer "+SB.key,"Content-Type":"application/json",...(opt.headers||{})}});if(!r.ok)throw new Error(r.status);return r.status===201||r.status===204?null:r.json()}
+const cool=(k,s)=>Date.now()-(+store.get(k)||0)<s*1000;
+const say=(el,t,ok)=>{el.textContent=t;el.className="note "+(ok?"ok":"er")};
+async function loadMsgs(){const box=$("#msgs");if(!sbOn()){box.innerHTML='<p class="sub">Guestbook messages will appear here.</p>';return}
+try{const rows=await sb("guestbook?select=name,message,created_at&order=created_at.desc&limit=20");
+box.innerHTML=rows.length?rows.map(m=>`<div class="msg"><b>${esc(m.name)}</b><small>${new Date(m.created_at).toLocaleDateString()}</small><p>${esc(m.message)}</p></div>`).join(""):'<p class="sub">Be the first to leave a message.</p>'}catch(e){box.innerHTML='<p class="sub">Messages are unavailable right now.</p>'}}
+loadMsgs();
+$("#gform").onsubmit=async e=>{e.preventDefault();const n=$("#gn").value.trim(),m=$("#gm").value.trim(),note=$("#gnote");
+if($("#gh").value)return;if(!n||!m)return say(note,"Please fill in your name and a message.");
+if(!sbOn())return say(note,"The guestbook is offline right now.");
+if(cool("lg",30))return say(note,"Please wait a few seconds before posting again.");
+try{await sb("guestbook",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({name:n,message:m})});store.set("lg",Date.now());e.target.reset();say(note,"Thank you! Your message has been posted.",1);loadMsgs()}catch(x){say(note,"Could not post your message. Please try again later.")}};
+$("#cform").onsubmit=async e=>{e.preventDefault();const n=$("#cn").value.trim(),em=$("#ce").value.trim(),m=$("#cm").value.trim(),note=$("#cnote");
+if($("#ch").value)return;if(!n||!m)return say(note,"Please fill in your name and message.");
+if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return say(note,"Please enter a valid email so I can reply.");
+if(!sbOn())return say(note,"The form is offline. Please email okirorinnocent49@gmail.com.");
+if(cool("lc",60))return say(note,"Please wait a minute before sending another message.");
+try{await sb("contact_messages",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({name:n,email:em,message:m})});store.set("lc",Date.now());e.target.reset();say(note,"Message sent! I'll get back to you soon.",1)}catch(x){say(note,"Could not send your message. Please email me directly.")}};
+
+/* hero network animation */
+(function(){const c=$("#net");if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const x=c.getContext("2d");let W,H,P=[],d=devicePixelRatio||1;
+function size(){W=c.clientWidth;H=c.clientHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);P=Array.from({length:Math.min(46,W/22|0)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))}
+size();addEventListener("resize",size);
+function tick(){x.clearRect(0,0,W,H);const col=getComputedStyle(root).getPropertyValue("--accent").trim();x.strokeStyle=col;x.fillStyle=col;
+P.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.globalAlpha=.5;x.beginPath();x.arc(p.x,p.y,2,0,6.3);x.fill();
+for(let j=i+1;j<P.length;j++){const q=P[j],dx=p.x-q.x,dy=p.y-q.y,r=dx*dx+dy*dy;if(r<12000){x.globalAlpha=.25*(1-r/12000);x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}});requestAnimationFrame(tick)}
+tick()})();
+</script>
+</body>
+</html>
