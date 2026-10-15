@@ -1,0 +1,18 @@
+Make these 2 edits to your existing index.html. Nothing else changes.
+
+1) In <head>, right after the line:
+       <meta name="theme-color" content="#4338ca">
+   paste:
+       <link rel="manifest" href="manifest.webmanifest">
+       <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+       <meta name="apple-mobile-web-app-capable" content="yes">
+       <meta name="mobile-web-app-capable" content="yes">
+       <meta name="apple-mobile-web-app-title" content="Innocent">
+       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+2) Just before the closing </body> tag, paste:
+       <script src="pwa.js"></script>
+
+Also: if your phone has a notch, change the viewport line to
+       <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+(optional)
