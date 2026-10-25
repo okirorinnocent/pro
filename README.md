@@ -2,7 +2,7 @@
 
 A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer Science student at Mbarara University of Science and Technology (MUST), Uganda, focused on AI, machine learning and Python apps.
 
-**Live site:** `https://<your-vercel-domain>.vercel.app` *(replace with your URL)*
+**Live site:** https://pro-nine-ruddy.vercel.app/
 
 ---
 
@@ -44,6 +44,8 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 .
 ├── index.html      # The entire site (markup, styles, scripts)
 ├── vercel.json     # Clean URLs + security headers
+├── sw.js, pwa.js, manifest.webmanifest, icons/   # Installable PWA
+├── supabase/guestbook.sql   # Guestbook table policies and grants
 ├── my_cv.pdf       # CV, served by the "Download CV" button
 ├── profile.png     # Portrait on the Home page and Open Graph image
 ├── school.png      # Photo collage in the About section
@@ -75,6 +77,7 @@ create table guestbook (
   id bigint generated always as identity primary key,
   name text not null,
   message text not null,
+  approved boolean default true,
   created_at timestamptz default now()
 );
 
@@ -90,13 +93,15 @@ create table contact_messages (
 alter table guestbook enable row level security;
 alter table contact_messages enable row level security;
 
--- Guestbook: anyone can read and post
-create policy "guestbook read"   on guestbook for select using (true);
+-- Guestbook: anyone can post; only approved messages are readable
+create policy "guestbook read"   on guestbook for select using (approved = true);
 create policy "guestbook insert" on guestbook for insert with check (true);
 
 -- Contact: anyone can send, but nobody can read from the browser
 create policy "contact insert" on contact_messages for insert with check (true);
 ```
+
+Also run the grants in `supabase/guestbook.sql` (without them posting fails with HTTP 401 / 42501).
 
 Then, in `index.html`, set your project URL and **publishable (anon) key**:
 
@@ -128,6 +133,7 @@ const SB = { url: "https://<project-ref>.supabase.co", key: "<publishable-or-ano
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
 ## Contact
 
