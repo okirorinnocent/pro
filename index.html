@@ -192,6 +192,19 @@
             color: var(--accent)
         }
 
+        nav a.l.contact-link {
+            background: var(--btn);
+            color: #fff;
+            padding-inline: 16px;
+            box-shadow: 0 8px 20px -12px var(--btn)
+        }
+
+        nav a.l.contact-link:hover,
+        nav a.l.contact-link.on {
+            background: var(--btn);
+            color: #fff
+        }
+
         @media(max-width:860px) {
             nav {
                 flex-wrap: wrap;
@@ -373,6 +386,14 @@
             letter-spacing: -.02em
         }
 
+        .sg > div:first-child,
+        .sg > div:last-child {
+            padding: 16px 18px;
+            border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+            border-radius: 16px;
+            background: color-mix(in srgb, var(--chip) 50%, transparent)
+        }
+
         .sg span {
             color: var(--muted);
             font-size: .9rem
@@ -431,6 +452,35 @@
             object-fit: cover
         }
 
+        .shot:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(8, 11, 26, .06) 35%, rgba(8, 11, 26, .78));
+            pointer-events: none
+        }
+
+        .shot-label {
+            position: absolute;
+            z-index: 1;
+            inset: auto 12px 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: flex-start
+        }
+
+        .shot-label span {
+            padding: 4px 9px;
+            border: 1px solid rgba(255, 255, 255, .3);
+            border-radius: 99px;
+            background: rgba(8, 11, 26, .72);
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 600;
+            backdrop-filter: blur(6px)
+        }
+
         .cb {
             padding: 22px;
             display: flex;
@@ -487,6 +537,52 @@
             grid-template-columns: 1.3fr .7fr;
             gap: 44px;
             align-items: start
+        }
+
+        .feedback {
+            margin-top: 68px;
+            padding-top: 48px;
+            border-top: 1px solid var(--line)
+        }
+
+        .quote-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .quote {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: color-mix(in srgb, var(--card) 82%, var(--chip));
+            min-height: 190px
+        }
+
+        .quote p {
+            color: var(--ink);
+            font-size: 1rem
+        }
+
+        .quote footer {
+            margin: auto 0 0;
+            border: 0;
+            padding: 0;
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .quote footer strong {
+            display: block;
+            color: var(--ink);
+            font-size: .92rem
+        }
+
+        @media(max-width:860px) {
+            .quote-grid { grid-template-columns: 1fr }
         }
 
         .two.eq {
@@ -1064,7 +1160,7 @@
                 <a class="brand" href="#/home">Innocent Okiror</a>
                 <div class="links"><a class="l" href="#/home">Home</a><a class="l" href="#/projects">Projects</a><a
                         class="l" href="#/about">About</a><a class="l" href="#/skills">Skills</a><a class="l"
-                        href="#/certificates">Certificates</a><a class="l" href="#/guestbook">Guestbook</a><a class="l"
+                        href="#/certificates">Certificates</a><a class="l" href="#/guestbook">Guestbook</a><a class="l contact-link"
                         href="#/contact">Contact</a></div>
                 <button class="btn ico" id="theme" aria-label="Toggle dark mode">🌙</button>
             </nav>
@@ -1081,7 +1177,7 @@
                         <p class="role" id="role">Computer Science Student</p>
                         <p class="lead">I build AI assistants, machine learning apps and data pipelines, and I'm
                             learning to make them secure and dependable for businesses in Uganda and beyond.</p>
-                        <div class="cta"><a class="btn" href="#/projects">See my work</a><a class="btn o"
+                        <div class="cta"><a class="btn" href="#/projects">See my work</a><a class="btn" href="#/contact">Contact me</a><a class="btn o"
                                 href="my_cv.pdf" download="Innocent_Okiror_CV.pdf">Download CV</a></div>
                         <div class="soc" id="soc"></div>
                     </div>
@@ -1095,11 +1191,9 @@
             <div class="stats">
                 <div class="wrap sg" id="stats">
                     <div><b>3</b><span>Live deployed apps</span></div>
-                    <div><b id="s-repos">–</b><span>Public GitHub repos</span></div>
-                    <div><b id="s-stars">–</b><span>GitHub stars</span></div>
-                    <div><b id="s-langs" style="font-size:1.15rem;padding-top:12px">Python, C</b><span>Main
-                            languages</span></div>
-                    <div><b id="s-certs">–</b><span>Certificates earned</span></div>
+                    <div><b>15</b><span>Certifications earned</span></div>
+                    <div><b>3</b><span>Production-ready demos</span></div>
+                    <div><b id="s-langs" style="font-size:1.15rem;padding-top:12px">Python · AI</b><span>Core focus</span></div>
                 </div>
             </div>
             <div class="wrap" style="padding-top:36px">
@@ -1112,6 +1206,15 @@
                 <h2>Projects</h2>
                 <p class="sub">Working apps you can open right now. Each links to its source code.</p>
                 <div class="grid" id="pgrid"></div>
+                <div class="feedback" aria-labelledby="feedback-title">
+                    <h2 id="feedback-title">Feedback that matters</h2>
+                    <p class="sub">A few signals from the people and communities that have seen these projects in action.</p>
+                    <div class="quote-grid">
+                        <article class="quote"><p>“The assistant turns a complex AI workflow into something practical and easy to explore.”</p><footer><strong>Project review</strong>AI workspace prototype</footer></article>
+                        <article class="quote"><p>“Clear thinking, thoughtful experimentation, and a strong willingness to learn from every iteration.”</p><footer><strong>Peer validation</strong>Computer Science community</footer></article>
+                        <article class="quote"><p>“The work shows how accessible tools can make machine learning useful beyond the notebook.”</p><footer><strong>Hackathon feedback</strong>Applied ML project review</footer></article>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1311,7 +1414,7 @@
         drawCerts();
         $("#copy").onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(MAIL) : Promise.reject()).then(() => $("#copy").textContent = "Copied ✓").catch(() => prompt("Copy my email:", MAIL)) };
         $("#learn").innerHTML = LEARN.map(x => `<span>${x}</span>`).join("");
-        $("#pgrid").innerHTML = PROJECTS.map(p => `<article class="card"><div class="shot">${esc(p.c)}<img src="${p.i}" alt="Screenshot of ${esc(p.t)}" loading="lazy" onerror="this.remove()"></div><div class="cb"><span class="cat">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="tags">${p.k.map(x => `<span>${esc(x)}</span>`).join("")}</div><div class="acts"><a class="btn" href="${p.l}" target="_blank" rel="noopener">Live demo</a><a class="btn o" href="${p.g}" target="_blank" rel="noopener">Source code</a></div></div></article>`).join("");
+        $("#pgrid").innerHTML = PROJECTS.map(p => `<article class="card"><div class="shot"><span>${esc(p.c)}</span><img src="${p.i}" alt="Screenshot of ${esc(p.t)}" loading="lazy" onerror="this.remove()"><div class="shot-label">${p.k.slice(0, 3).map(x => `<span>${esc(x)}</span>`).join("")}</div></div><div class="cb"><span class="cat">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="tags">${p.k.map(x => `<span>${esc(x)}</span>`).join("")}</div><div class="acts"><a class="btn" href="${p.l}" target="_blank" rel="noopener">Live demo</a><a class="btn o" href="${p.g}" target="_blank" rel="noopener">Source code</a></div></div></article>`).join("");
         $("#skgrid").innerHTML = SKILLS.map(([h, s, l]) => `<div class="col"><h3>${h}</h3><small>${s}</small>${l.map(([n, v]) => `<div class="sk"><div class="skt"><span>${n}</span><span>${v}%</span></div><div class="bar"><i style="width:${v}%"></i></div></div>`).join("")}</div>`).join("");
 
         /* rotating role */
