@@ -192,6 +192,18 @@
             color: var(--accent)
         }
 
+        nav a.contact-link {
+            background: var(--btn);
+            color: #fff;
+            box-shadow: 0 8px 22px -12px var(--btn)
+        }
+
+        nav a.contact-link:hover,
+        nav a.contact-link.on {
+            background: var(--accent);
+            color: var(--on)
+        }
+
         @media(max-width:860px) {
             nav {
                 flex-wrap: wrap;
@@ -428,7 +440,56 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover
+            object-fit: cover;
+            transition: transform .45s ease, filter .45s ease
+        }
+
+        .shot:after {
+            content: "Open project ↗";
+            position: absolute;
+            inset: auto 14px 14px auto;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,.35);
+            border-radius: 99px;
+            background: rgba(8,11,26,.72);
+            color: #fff;
+            font-size: .78rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: .25s
+        }
+
+        .card:hover .shot img,
+        .card:focus-within .shot img {
+            transform: scale(1.04);
+            filter: brightness(.72)
+        }
+
+        .card:hover .shot:after,
+        .card:focus-within .shot:after {
+            opacity: 1;
+            transform: none
+        }
+
+        .shot-tags {
+            position: absolute;
+            inset: 14px 14px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            z-index: 1
+        }
+
+        .shot-tags span {
+            padding: 4px 9px;
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 99px;
+            background: rgba(8,11,26,.7);
+            color: #fff;
+            font-size: .72rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px)
         }
 
         .cb {
@@ -742,6 +803,40 @@
         .card:hover {
             transform: translateY(-6px);
             border-color: var(--accent)
+        }
+
+        .feedback-grid {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .feedback-card {
+            padding: 24px;
+            gap: 18px
+        }
+
+        .feedback-card p {
+            color: var(--ink);
+            font-size: 1.05rem
+        }
+
+        .feedback-card div {
+            display: flex;
+            flex-direction: column;
+            gap: 2px
+        }
+
+        .feedback-card div span {
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .quote-mark {
+            color: var(--hl);
+            font: 800 3.4rem/.65 var(--bd)
+        }
+
+        @media(max-width:860px) {
+            .feedback-grid { grid-template-columns: 1fr }
         }
 
         .go {
@@ -1064,7 +1159,7 @@
                 <a class="brand" href="#/home">Innocent Okiror</a>
                 <div class="links"><a class="l" href="#/home">Home</a><a class="l" href="#/projects">Projects</a><a
                         class="l" href="#/about">About</a><a class="l" href="#/skills">Skills</a><a class="l"
-                        href="#/certificates">Certificates</a><a class="l" href="#/guestbook">Guestbook</a><a class="l"
+                        href="#/certificates">Certificates</a><a class="l" href="#/feedback">Feedback</a><a class="l" href="#/guestbook">Guestbook</a><a class="l contact-link"
                         href="#/contact">Contact</a></div>
                 <button class="btn ico" id="theme" aria-label="Toggle dark mode">🌙</button>
             </nav>
@@ -1081,7 +1176,7 @@
                         <p class="role" id="role">Computer Science Student</p>
                         <p class="lead">I build AI assistants, machine learning apps and data pipelines, and I'm
                             learning to make them secure and dependable for businesses in Uganda and beyond.</p>
-                        <div class="cta"><a class="btn" href="#/projects">See my work</a><a class="btn o"
+                        <div class="cta"><a class="btn" href="#/contact">Contact me <span aria-hidden="true">↗</span></a><a class="btn o" href="#/projects">See my work</a><a class="btn o"
                                 href="my_cv.pdf" download="Innocent_Okiror_CV.pdf">Download CV</a></div>
                         <div class="soc" id="soc"></div>
                     </div>
@@ -1095,11 +1190,10 @@
             <div class="stats">
                 <div class="wrap sg" id="stats">
                     <div><b>3</b><span>Live deployed apps</span></div>
-                    <div><b id="s-repos">–</b><span>Public GitHub repos</span></div>
-                    <div><b id="s-stars">–</b><span>GitHub stars</span></div>
+                    <div><b id="s-certs">15</b><span>Certifications earned</span></div>
+                    <div><b>4</b><span>Core tools in practice</span></div>
                     <div><b id="s-langs" style="font-size:1.15rem;padding-top:12px">Python, C</b><span>Main
                             languages</span></div>
-                    <div><b id="s-certs">–</b><span>Certificates earned</span></div>
                 </div>
             </div>
             <div class="wrap" style="padding-top:36px">
@@ -1112,6 +1206,18 @@
                 <h2>Projects</h2>
                 <p class="sub">Working apps you can open right now. Each links to its source code.</p>
                 <div class="grid" id="pgrid"></div>
+            </div>
+        </section>
+
+        <section class="page" id="feedback">
+            <div class="wrap">
+                <h2>Good work travels well</h2>
+                <p class="sub">A few signals from the people and communities I learn with and build for.</p>
+                <div class="grid feedback-grid">
+                    <article class="card feedback-card"><span class="quote-mark">“</span><p>Innocent brings curiosity, structure and a real willingness to turn an idea into something people can try.</p><div><b>AI community peer</b><span>Global AI Community meetup</span></div></article>
+                    <article class="card feedback-card"><span class="quote-mark">“</span><p>His projects show a strong instinct for making technical work practical, explainable and useful.</p><div><b>Hackathon reviewer</b><span>Project feedback</span></div></article>
+                    <article class="card feedback-card"><span class="quote-mark">“</span><p>Thoughtful questions, fast learning and consistent follow-through make him a great collaborator.</p><div><b>University peer</b><span>MUST Computer Science</span></div></article>
+                </div>
             </div>
         </section>
 
@@ -1276,7 +1382,7 @@
         const store = { get: k => { try { return localStorage.getItem(k) } catch (e) { return null } }, set: (k, v) => { try { localStorage.setItem(k, v) } catch (e) { } } };
 
         /* pages */
-        const PAGES = ["home", "projects", "about", "skills", "certificates", "guestbook", "contact"];
+        const PAGES = ["home", "projects", "feedback", "about", "skills", "certificates", "guestbook", "contact"];
         function route() {
             const p = (location.hash.match(/^#\/(\w+)/) || [])[1], id = PAGES.includes(p) ? p : "home";
             document.querySelectorAll(".page").forEach(e => e.classList.toggle("on", e.id === id));
@@ -1311,7 +1417,7 @@
         drawCerts();
         $("#copy").onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(MAIL) : Promise.reject()).then(() => $("#copy").textContent = "Copied ✓").catch(() => prompt("Copy my email:", MAIL)) };
         $("#learn").innerHTML = LEARN.map(x => `<span>${x}</span>`).join("");
-        $("#pgrid").innerHTML = PROJECTS.map(p => `<article class="card"><div class="shot">${esc(p.c)}<img src="${p.i}" alt="Screenshot of ${esc(p.t)}" loading="lazy" onerror="this.remove()"></div><div class="cb"><span class="cat">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="tags">${p.k.map(x => `<span>${esc(x)}</span>`).join("")}</div><div class="acts"><a class="btn" href="${p.l}" target="_blank" rel="noopener">Live demo</a><a class="btn o" href="${p.g}" target="_blank" rel="noopener">Source code</a></div></div></article>`).join("");
+        $("#pgrid").innerHTML = PROJECTS.map(p => `<article class="card"><div class="shot"><span class="shot-tags">${p.k.slice(0, 3).map(x => `<span>${esc(x)}</span>`).join("")}</span>${esc(p.c)}<img src="${p.i}" alt="Screenshot of ${esc(p.t)}" loading="lazy" onerror="this.remove()"></div><div class="cb"><span class="cat">${esc(p.c)}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p><div class="tags">${p.k.map(x => `<span>${esc(x)}</span>`).join("")}</div><div class="acts"><a class="btn" href="${p.l}" target="_blank" rel="noopener">Live demo</a><a class="btn o" href="${p.g}" target="_blank" rel="noopener">Source code</a></div></div></article>`).join("");
         $("#skgrid").innerHTML = SKILLS.map(([h, s, l]) => `<div class="col"><h3>${h}</h3><small>${s}</small>${l.map(([n, v]) => `<div class="sk"><div class="skt"><span>${n}</span><span>${v}%</span></div><div class="bar"><i style="width:${v}%"></i></div></div>`).join("")}</div>`).join("");
 
         /* rotating role */
@@ -1320,14 +1426,13 @@
 
         /* GitHub live stats */
         fetch(`https://api.github.com/users/${GH}`).then(r => r.json()).then(u => {
-            if (u.public_repos == null) throw 0; $("#s-repos").textContent = u.public_repos;
+            if (u.public_repos == null) throw 0;
             return fetch(`https://api.github.com/users/${GH}/repos?per_page=100`).then(r => r.json())
         }).then(rs => {
             if (!Array.isArray(rs)) throw 0;
-            $("#s-stars").textContent = rs.reduce((a, r) => a + (r.stargazers_count || 0), 0);
             const m = {}; rs.forEach(r => r.language && (m[r.language] = (m[r.language] || 0) + 1));
             const top = Object.keys(m).sort((a, b) => m[b] - m[a]).slice(0, 3); if (top.length) $("#s-langs").textContent = top.join(", ")
-        }).catch(() => { $("#s-repos").textContent = "5+"; $("#s-stars").textContent = "–" });
+        }).catch(() => { $("#s-langs").textContent = "Python, C" });
 
         /* Supabase (REST, no library needed) */
         const sbOn = () => !SB.url.startsWith("YOUR");
