@@ -761,7 +761,14 @@
         }
 
         .er {
-            color: #dc2626
+            color: #f87171;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px
+        }
+
+        .er svg {
+            flex: 0 0 auto
         }
 
         .msgs {
@@ -1296,8 +1303,8 @@
                 <p class="sub">Leave a short note. It appears here for the next visitor.</p>
                 <div class="two eq">
                     <form id="gform" novalidate>
-                        <label for="gn">Your name</label><input id="gn" maxlength="60" autocomplete="name">
-                        <label for="gm">Message</label><textarea id="gm" maxlength="400"></textarea>
+  <label for="gn">Your name</label><input id="gn" maxlength="40" autocomplete="name">
+  <label for="gm">Message</label><textarea id="gm" maxlength="280"></textarea>
                         <input class="hp" id="gh" tabindex="-1" autocomplete="off" aria-hidden="true">
                         <button class="btn" type="submit">Post message</button>
                         <p class="note" id="gnote" role="status"></p>
@@ -1434,24 +1441,39 @@
 
         /* Supabase (REST, no library needed) */
         const sbOn = () => !SB.url.startsWith("YOUR");
-        async function sb(path, opt = {}) { const r = await fetch(SB.url + "/rest/v1/" + path, { ...opt, headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json", ...(opt.headers || {}) } }); if (!r.ok) throw new Error(r.status); return r.status === 201 || r.status === 204 ? null : r.json() }
-        const cool = (k, s) => Date.now() - (+store.get(k) || 0) < s * 1000;
-        const say = (el, t, ok) => { el.textContent = t; el.className = "note " + (ok ? "ok" : "er") };
-        async function loadMsgs() {
-            const box = $("#msgs"); if (!sbOn()) { box.innerHTML = '<p class="sub">Guestbook messages will appear here.</p>'; return }
-            try {
-                const rows = await sb("guestbook?select=name,message,created_at&order=created_at.desc&limit=20");
-                box.innerHTML = rows.length ? rows.map(m => `<div class="msg"><b>${esc(m.name)}</b><small>${new Date(m.created_at).toLocaleDateString()}</small><p>${esc(m.message)}</p></div>`).join("") : '<p class="sub">Be the first to leave a message.</p>'
-            } catch (e) { box.innerHTML = '<p class="sub">Messages are unavailable right now.</p>' }
-        }
-        loadMsgs();
-        $("#gform").onsubmit = async e => {
-            e.preventDefault(); const n = $("#gn").value.trim(), m = $("#gm").value.trim(), note = $("#gnote");
-            if ($("#gh").value) return; if (!n || !m) return say(note, "Please fill in your name and a message.");
-            if (!sbOn()) return say(note, "The guestbook opens soon. For now, please use the Contact page.");
-            if (cool("lg", 30)) return say(note, "Please wait a few seconds before posting again.");
-            try { await sb("guestbook", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, message: m }) }); store.set("lg", Date.now()); e.target.reset(); say(note, "Thank you! Your message has been posted.", 1); loadMsgs() } catch (x) { say(note, "Could not post your message. Please try again later.") }
-        };
+  async function sb(path, opt = {}) {
+  const r = await fetch(SB.url + "/rest/v1/" + path, { ...opt, headers: { apikey: SB.key, Authorization: "Bearer " + SB.key, "Content-Type": "application/json", ...(opt.headers || {}) } });
+  const raw = await r.text(); let body = null; try { body = raw ? JSON.parse(raw) : null } catch (_) { body = raw }
+  if (!r.ok) { const error = new Error(body?.message || `Supabase request failed with HTTP ${r.status}`); error.status = r.status; error.code = body?.code; error.details = body?.details; error.hint = body?.hint; error.body = body; throw error }
+  return r.status === 201 || r.status === 204 || !raw ? null : body;
+  }
+  const sessionStore = { get: k => { try { return sessionStorage.getItem(k) } catch (_) { return null } }, set: (k, v) => { try { sessionStorage.setItem(k, v) } catch (_) { } } };
+  const cool = (k, s) => Date.now() - (+sessionStore.get(k) || 0) < s * 1000;
+  const alertIcon = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>';
+  const say = (el, t, ok) => { el.className = "note " + (ok ? "ok" : "er"); el.setAttribute("role", ok ? "status" : "alert"); el.textContent = ""; if (!ok) el.insertAdjacentHTML("afterbegin", alertIcon); el.append(document.createTextNode(t)) };
+  async function loadMsgs() {
+  const box = $("#msgs"); if (!sbOn()) { box.innerHTML = '<p class="sub">Guestbook messages will appear here.</p>'; return }
+  try {
+  let rows;
+  try { rows = await sb("guestbook?select=name,message,created_at&approved=eq.true&order=created_at.desc&limit=20") }
+  catch (withApproval) { console.warn("[v0] approved filter unavailable; loading messages without it", withApproval); rows = await sb("guestbook?select=name,message,created_at&order=created_at.desc&limit=20") }
+  box.innerHTML = rows.length ? rows.map(m => `<div class="msg"><b>${esc(m.name)}</b><small>${new Date(m.created_at).toLocaleDateString()}</small><p>${esc(m.message)}</p></div>`).join("") : '<p class="sub">Be the first to leave a message.</p>'
+  } catch (e) { console.error("[v0] Guestbook load failed", e); box.innerHTML = '<p class="sub">Messages are unavailable right now.</p>' }
+  }
+  loadMsgs();
+  $("#gform").onsubmit = async e => {
+  e.preventDefault(); const form = e.target, button = form.querySelector('button[type="submit"]'), nameInput = $("#gn"), messageInput = $("#gm"), note = $("#gnote"), n = nameInput.value.trim(), m = messageInput.value.trim();
+  if ($("#gh").value) return;
+  if (Array.from(n).length < 1 || Array.from(n).length > 40) return say(note, "Name must be between 1 and 40 characters.");
+  if (Array.from(m).length < 1 || Array.from(m).length > 280) return say(note, "Message must be between 1 and 280 characters.");
+  if (!sbOn()) return say(note, "The guestbook opens soon. For now, please use the Contact page.");
+  if (cool("lg", 20)) return say(note, "Please wait 20 seconds before posting again.");
+  button.disabled = true; button.textContent = "Posting...";
+  try { await sb("guestbook", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, message: m }) }); sessionStore.set("lg", Date.now()); form.reset(); say(note, "Thank you! Your message has been posted.", 1); await loadMsgs() }
+  catch (x) { console.error("[v0] Guestbook post failed", { status: x.status, code: x.code, message: x.message, details: x.details, hint: x.hint, body: x.body }); say(note, `Could not post (HTTP ${x.status || "error"}${x.code ? " / " + x.code : ""}). Please try again.`) }
+  finally { button.disabled = false; button.textContent = "Post message" }
+  };
+  [$("#gn"), $("#gm")].forEach(input => input.addEventListener("input", () => { const note = $("#gnote"); if (note.classList.contains("er")) { note.textContent = ""; note.className = "note"; note.removeAttribute("role") } }));
         $("#cform").onsubmit = async e => {
             e.preventDefault(); const n = $("#cn").value.trim(), em = $("#ce").value.trim(), m = $("#cm").value.trim(), note = $("#cnote");
             if ($("#ch").value) return; if (!n || !m) return say(note, "Please fill in your name and message.");
