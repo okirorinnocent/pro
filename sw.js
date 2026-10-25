@@ -1,6 +1,6 @@
 /* Service worker: offline-capable app shell.
    Bump VERSION whenever you deploy changes so users get fresh files. */
-const VERSION = "v1";
+const VERSION = "v2";
 const CACHE = "io-portfolio-" + VERSION;
 const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.png",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];

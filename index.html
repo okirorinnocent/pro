@@ -10,7 +10,8 @@
     <meta property="og:title" content="Innocent Okiror | Computer Science & AI">
     <meta property="og:description"
         content="Computer Science student building AI assistants, ML apps and data pipelines in Uganda.">
-    <meta property="og:image" content="profile.png">
+    <meta property="og:image" content="https://pro-nine-ruddy.vercel.app/profile.png">
+    <meta property="og:url" content="https://pro-nine-ruddy.vercel.app/">
     <meta name="theme-color" content="#4338ca">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1480,7 +1481,7 @@
             if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return say(note, "Please enter a valid email so I can reply.");
             if (!sbOn()) { open(gm("Message from " + n, m + "\n\nReply to: " + em), "_blank"); return say(note, "Opening Gmail so you can send it to me directly.", 1) }
             if (cool("lc", 60)) return say(note, "Please wait a minute before sending another message.");
-            try { await sb("contact_messages", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, email: em, message: m }) }); store.set("lc", Date.now()); e.target.reset(); say(note, "Message sent! I'll get back to you soon.", 1) } catch (x) { note.className = "note er"; note.innerHTML = 'Could not send it. <a href="' + gm("Message from " + n, m + "\n\nReply to: " + em).replace(/&/g, "&amp;") + '" target="_blank" rel="noopener">Email me directly instead</a>.' }
+            try { await sb("contact_messages", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, email: em, message: m }) }); sessionStore.set("lc", Date.now()); e.target.reset(); say(note, "Message sent! I'll get back to you soon.", 1) } catch (x) { console.error("Contact post failed", { status: x.status, code: x.code, message: x.message, details: x.details, hint: x.hint }); note.className = "note er"; note.innerHTML = 'Could not send it. <a href="' + gm("Message from " + n, m + "\n\nReply to: " + em).replace(/&/g, "&amp;") + '" target="_blank" rel="noopener">Email me directly instead</a>.' }
         };
 
         /* hero network animation */
