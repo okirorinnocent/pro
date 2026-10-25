@@ -1397,7 +1397,7 @@
         /* content */
         $("#soc").innerHTML = SOCIALS.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("");
         $("#go").innerHTML = [["Projects", "3 live apps with source code", "projects"], ["About", "My journey and credentials", "about"], ["Skills", "What I know, honestly", "skills"], ["Certificates", CERTS.length + " courses and credentials", "certificates"], ["Contact", "Let's work together", "contact"]].map(([t, d, p]) => `<a class="col go" href="#/${p}"><h3>${t}</h3><small>${d}</small></a>`).join("");
-        $("#s-certs").textContent = CERTS.length;
+        const certCount = $("#s-certs"); if (certCount) certCount.textContent = CERTS.length;
         const CAND = k => ["certs/" + k + "-t.jpg", "certs/" + k + ".jpg", "certs/" + k + ".png", "certs/" + k + ".jpeg"];
         function imgFail(el) { const c = CERTS[+el.dataset.k], n = (+el.dataset.n || 0) + 1, L = CAND(c.img); if (n < L.length) { el.dataset.n = n; el.src = L[n] } else { el.parentElement.classList.add("ph"); el.replaceWith(Object.assign(document.createElement("span"), { textContent: c.i })) } }
         let cf = "All";
