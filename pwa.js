@@ -7,11 +7,11 @@
   const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   if (standalone) return;                                   // already installed, no button needed
 
-  const nav = document.querySelector("nav"), themeBtn = document.getElementById("theme");
-  if (!nav || !themeBtn) return;
+  const themeBtn = document.getElementById("theme"), nav = themeBtn && themeBtn.parentNode;
+  if (!nav) return;
 
   const btn = document.createElement("button");
-  btn.className = "btn o"; btn.type = "button"; btn.id = "install"; btn.hidden = true;
+  btn.className = "install-btn"; btn.type = "button"; btn.id = "install"; btn.hidden = true;
   btn.textContent = "⬇ Install app"; btn.style.cssText = "padding:8px 14px;font-size:.88rem";
   nav.insertBefore(btn, themeBtn);
 

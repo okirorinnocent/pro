@@ -9,9 +9,10 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 ## Features
 
 - **Single-file site**: everything (HTML, CSS, JS) lives in `index.html`, with no build step and no framework.
-- **Hash-based page routing**: Home, Projects, About, Skills, Certificates, Guestbook and Contact, with no page reloads.
-- **Dark / light theme toggle**, remembered between visits.
-- **Animated network-style hero** canvas background.
+- **Single scrolling page** with Home, Projects, About, Skills, Certificates, Guestbook and Contact sections, a sticky nav that highlights the section you're in, and a mobile menu.
+- **Dark / light theme**: follows the device setting on first visit, then remembers the visitor's choice (no flash on load).
+- **Mobile menu**, skip-to-content link, keyboard-friendly certificate viewer, and scroll-reveal animations.
+- **"More builds" section** for smaller projects (add `l` and `g` links to any entry in the `MORE` array to show buttons).
 - **Live GitHub stats**: repo count, stars and languages pulled from the GitHub API.
 - **Projects showcase** with category tags and tech chips.
 - **Certificates gallery** with category filter and a lightbox viewer.
@@ -33,7 +34,7 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 ## Tech Stack
 
 - **Frontend:** HTML5, CSS3 (custom properties for theming), vanilla JavaScript
-- **Fonts:** Bricolage Grotesque and Figtree (Google Fonts)
+- **Fonts:** Inter (Google Fonts)
 - **Backend (BaaS):** [Supabase](https://supabase.com) REST API for the guestbook and contact form
 - **Data:** GitHub REST API (public, unauthenticated)
 - **Hosting:** [Vercel](https://vercel.com)
@@ -116,7 +117,9 @@ const SB = { url: "https://<project-ref>.supabase.co", key: "<publishable-or-ano
 | What | Where in `index.html` |
 |---|---|
 | GitHub username for stats | `const GH = "okirorinnocent";` |
-| Projects list | the project array near the top of the main `<script>` |
+| "What I do" statements | the `WHAT` array near the top of the main `<script>` |
+| Skills cards | the `SKILLS` array |
+| Skill levels | the `SKILLS` array (Strong / Working / Learning) |
 | Certificates list | the `CERTS` array |
 | Theme colors | CSS variables in `:root` and `:root[data-theme=light]` |
 | Contact links | Gmail and WhatsApp `href`s in the Contact section |
