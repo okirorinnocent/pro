@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://pro-nine-ruddy.vercel.app/profile.png">
 <meta property="og:url" content="https://pro-nine-ruddy.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#1f2326">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -386,8 +386,8 @@ textarea{min-height:130px;resize:vertical}
 
 <footer class="footer">
   <div class="container footer-inner">
-    <span>© <span id="yr"></span> Innocent Okiror</span>
-    <span>Built with HTML, CSS &amp; JavaScript · Hosted on Vercel</span>
+    <span>© 2026 Innocent Okiror · Building step by step</span>
+    <span>BSc Computer Science · MUST</span>
     <a href="#home">Back to top ↑</a>
   </div>
 </footer>
@@ -457,7 +457,6 @@ function closeMenu() { navlinks.classList.remove("open"); menuBtn.setAttribute("
 menuBtn.onclick = () => { const o = navlinks.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", String(o)); menuBtn.textContent = o ? "✕" : "☰" };
 navlinks.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
 document.addEventListener("click", e => { if (!e.target.closest(".topbar")) closeMenu() });
-$("#yr").textContent = new Date().getFullYear();
 
 /* content */
 $("#soc").innerHTML = SOCIALS.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join("");
