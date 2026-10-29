@@ -1,7 +1,9 @@
 /* Registers the service worker and adds an "Install app" button to the header. */
 (function () {
   if ("serviceWorker" in navigator) {
-    addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+    addEventListener("load", () => navigator.serviceWorker.register("sw.js").then(registration => {
+      registration.update();
+    }).catch(() => {}));
   }
 
   const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;

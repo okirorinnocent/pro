@@ -1,9 +1,9 @@
 /* Service worker: offline-capable app shell.
    Bump VERSION whenever you deploy changes so users get fresh files. */
-const VERSION = "v5";
+const VERSION = "v6";
 const CACHE = "io-portfolio-" + VERSION;
 const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.png",
-  "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png", "icons/apple-touch-icon.png"];
+  "icons/icon-192.png?v=2", "icons/icon-512.png?v=2", "icons/icon-maskable-512.png?v=2", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c =>
