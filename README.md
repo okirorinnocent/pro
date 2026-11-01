@@ -2,7 +2,7 @@
 
 A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer Science student at Mbarara University of Science and Technology (MUST), Uganda, focused on AI, machine learning and Python apps.
 
-**Live site:** https://pro-nine-ruddy.vercel.app/
+**Live site:** https://www.okirorinnocent.tech/
 
 ---
 
@@ -14,12 +14,13 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 - **Mobile menu**, skip-to-content link, keyboard-friendly certificate viewer, and scroll-reveal animations.
 - **"More builds" section** for smaller projects (add `l` and `g` links to any entry in the `MORE` array to show buttons).
 - **Live GitHub stats**: repo count, stars and languages pulled from the GitHub API.
-- **Projects showcase** with category tags and tech chips.
+- **Projects showcase** with responsive cards, screenshot placeholders, GitHub links and accessible detail modals.
+- **Learning log, flagship case study and testimonials** driven by arrays in `index.html`.
 - **Certificates gallery** with category filter and a lightbox viewer.
 - **Guestbook**: visitors can leave a message (stored in Supabase).
 - **Contact form**: messages are saved to Supabase, plus direct Gmail and WhatsApp links.
 - **Downloadable CV** (`my_cv.pdf`).
-- **SEO / sharing ready**: meta description and Open Graph tags (`profile.png` as the preview image).
+- **SEO / sharing ready**: canonical custom-domain URL, Open Graph/Twitter tags, Person JSON-LD and Vercel Analytics.
 - **Responsive and accessible**: mobile layout, focus outlines, semantic sections.
 - **Security headers** configured through `vercel.json`.
 
@@ -118,11 +119,16 @@ const SB = { url: "https://<project-ref>.supabase.co", key: "<publishable-or-ano
 |---|---|
 | GitHub username for stats | `const GH = "okirorinnocent";` |
 | "What I do" statements | the `WHAT` array near the top of the main `<script>` |
+| Projects and GitHub URLs | the `PROJECTS` array |
+| Learning log | the `LEARNING_LOG` array |
+| Testimonials | the `TESTIMONIALS` array |
 | Skills cards | the `SKILLS` array |
 | Skill levels | the `SKILLS` array (Strong / Working / Learning) |
 | Certificates list | the `CERTS` array |
 | Theme colors | CSS variables in `:root` and `:root[data-theme=light]` |
 | Contact links | Gmail and WhatsApp `href`s in the Contact section |
+
+Project cards currently use inline placeholders so the page works immediately. Replace each `image` value in `PROJECTS` with a local WebP screenshot or short demo asset, and replace the placeholder GitHub URLs with the specific repositories. Replace the two testimonial entries with real consented quotes, names and roles.
 
 ## Deploy to Vercel
 

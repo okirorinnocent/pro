@@ -8,9 +8,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Innocent Okiror | Computer Science & AI">
 <meta property="og:description" content="Computer Science student building AI assistants, ML apps and data pipelines in Uganda.">
-<meta property="og:image" content="https://pro-nine-ruddy.vercel.app/profile.png">
-<meta property="og:url" content="https://pro-nine-ruddy.vercel.app/">
+<meta property="og:image" content="https://www.okirorinnocent.tech/profile.png">
+<meta property="og:url" content="https://www.okirorinnocent.tech/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Innocent Okiror | Computer Science &amp; AI">
+<meta name="twitter:description" content="Computer Science student building AI assistants, ML apps and data pipelines in Uganda.">
+<meta name="twitter:image" content="https://www.okirorinnocent.tech/profile.png">
+<link rel="canonical" href="https://www.okirorinnocent.tech/">
 <meta name="theme-color" content="#1f2326">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -23,8 +27,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Innocent Okiror","url":"https://pro-nine-ruddy.vercel.app/","image":"https://pro-nine-ruddy.vercel.app/profile.png","jobTitle":"Computer Science Student","alumniOf":"Mbarara University of Science and Technology","address":{"@type":"PostalAddress","addressLocality":"Mbarara","addressCountry":"UG"},"sameAs":["https://github.com/okirorinnocent","https://www.linkedin.com/in/innocent-okiror-2793443b0"]}
+{"@context":"https://schema.org","@type":"Person","name":"Innocent Okiror","url":"https://www.okirorinnocent.tech/","image":"https://www.okirorinnocent.tech/profile.png","jobTitle":"Computer Science Student","alumniOf":"Mbarara University of Science and Technology","address":{"@type":"PostalAddress","addressLocality":"Mbarara","addressCountry":"UG"},"sameAs":["https://github.com/okirorinnocent","https://www.linkedin.com/in/innocent-okiror-2793443b0"]}
 </script>
+<script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 <script>
 /* theme before first paint: saved choice, else device setting */
 (function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}
@@ -97,6 +102,9 @@ html[data-theme=dark] .btn.primary{color:#0b1020}
 .status{display:inline-flex;align-items:center;gap:7px;font-size:.8rem;color:var(--accent-2);white-space:nowrap}
 .status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
 .profile-card p{font-size:.9rem;margin:15px 0 0;color:var(--muted)}
+.building{margin-top:30px;padding:14px 18px;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 80%,transparent)}
+.building strong{display:block;color:var(--accent-2);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em}
+.building ul{display:flex;flex-wrap:wrap;gap:8px 22px;margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:.9rem}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:38px}
 .stat{border:1px solid var(--border);background:color-mix(in srgb,var(--surface) 82%,transparent);border-radius:18px;padding:20px;transition:border-color .2s,transform .2s}
 .stat:hover{border-color:var(--accent);transform:translateY(-2px)}
@@ -128,6 +136,27 @@ a.card:hover,.card.hov:hover{border-color:var(--accent);transform:translateY(-3p
 .project .links a{color:var(--accent)}
 .project .links a.muted{color:var(--muted)}
 .project .tag-row{margin-bottom:0}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.project-card{padding:0;overflow:hidden;cursor:pointer}
+.project-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.project-thumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.project-body{padding:19px 20px 20px}
+.project-body h3{margin:0 0 7px}
+.project-body p{min-height:3.1em}
+.case-study{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.case-study .card{height:100%}
+.case-study dt{color:var(--accent-2);font-weight:800;font-size:.8rem;margin-top:12px}
+.case-study dd{margin:2px 0 0;color:var(--muted)}
+.learning-grid,.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.learning-card time{color:var(--accent-2);font-size:.8rem;font-weight:800}
+.learning-card h3{margin-top:7px}
+.quote{font-size:1rem!important;color:var(--text)!important}
+.project-modal{position:fixed;inset:0;z-index:60;background:rgba(5,7,16,.9);backdrop-filter:blur(8px);display:grid;place-items:center;padding:20px}
+.project-modal[hidden]{display:none}
+.project-dialog{max-width:780px;width:100%;max-height:90vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow);position:relative}
+.project-dialog>img{display:block;width:100%;max-height:360px;object-fit:cover;border-radius:13px;margin:16px 0}
+.project-dialog .close-modal{position:absolute;right:16px;top:16px}
+.modal-features{padding-left:20px;color:var(--muted)}
 .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);border:1px solid var(--border)}
 .badge.live{color:var(--accent-2)}
 .note{color:var(--muted);font-size:.88rem;margin-top:18px}
@@ -197,6 +226,7 @@ textarea{min-height:130px;resize:vertical}
 
 .footer{border-top:1px solid var(--border);padding:25px 0;color:var(--muted);font-size:.86rem}
 .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-socials{display:flex;gap:14px}.footer-socials a{display:inline-flex;align-items:center;color:var(--muted)}.footer-socials a:hover{color:var(--accent)}
 .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
 .js .reveal.visible{opacity:1;transform:none}
 
@@ -204,6 +234,7 @@ textarea{min-height:130px;resize:vertical}
   .navlinks{gap:13px;font-size:.84rem}
   .hero-grid{grid-template-columns:1fr .72fr;gap:28px}
   .grid-3{grid-template-columns:repeat(2,1fr)}
+  .projects-grid,.learning-grid,.testimonial-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:760px){
   .container{width:min(100% - 30px,var(--max))}
@@ -221,6 +252,7 @@ textarea{min-height:130px;resize:vertical}
   .section-head{display:block}
   .section-head p{margin-top:13px}
   .grid-3{grid-template-columns:1fr}
+  .projects-grid,.learning-grid,.testimonial-grid,.case-study{grid-template-columns:1fr}
   .stats{gap:9px}.stat{padding:14px}.stat strong{font-size:1.55rem}
 }
 @media(prefers-reduced-motion:reduce){
@@ -236,9 +268,11 @@ textarea{min-height:130px;resize:vertical}
   <div class="container nav">
     <a class="brand" href="#home">Innocent<span>.</span></a>
     <nav class="navlinks" id="navlinks" aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#what-i-do">What I do</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#certificates">Certificates</a><a href="#guestbook">Guestbook</a><a href="#contact">Contact</a>
+      <a href="#home">Home</a><a href="#what-i-do">What I do</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#certificates">Certificates</a><a href="#learning">Learning</a><a href="#guestbook">Guestbook</a><a href="#contact">Contact</a>
     </nav>
     <div class="nav-actions">
+      <a class="icon-btn nav-social" href="https://github.com/okirorinnocent" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.84 1.23 1.84 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg></a>
+      <a class="icon-btn nav-social" href="https://www.linkedin.com/in/innocent-okiror-2793443b0" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4.5v13.5H.5V8Zm7 0h4.31v1.84h.06c.6-1.12 2.07-2.3 4.26-2.3 4.56 0 5.4 3 5.4 6.9v7.06h-4.5v-6.26c0-1.49-.03-3.4-2.07-3.4-2.07 0-2.39 1.62-2.39 3.29v6.37H7.5V8Z"/></svg></a>
       <button class="icon-btn" id="theme" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">☼</button>
       <button class="menu-btn" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navlinks">☰</button>
     </div>
@@ -259,6 +293,7 @@ textarea{min-height:130px;resize:vertical}
           <a class="btn secondary" href="my_cv.pdf" download="Innocent_Okiror_CV.pdf">Download CV ↓</a>
         </div>
         <div class="socials" id="soc"></div>
+        <div class="building"><strong>Currently building</strong><ul><li>AI assistants with grounded answers</li><li>Practical ML apps for everyday decisions</li><li>Reliable data pipelines and secure software</li></ul></div>
         <div class="stats">
           <div class="stat"><strong id="s-apps">3</strong><span>Live deployed apps</span></div>
           <div class="stat"><strong id="s-certs">15</strong><span>Certificates earned</span></div>
@@ -269,7 +304,7 @@ textarea{min-height:130px;resize:vertical}
         <div class="avatar"><img src="profile.png" alt="Portrait of Innocent Okiror" width="380" height="475" fetchpriority="high"></div>
         <div class="profile-meta">
           <div><strong>Innocent Okiror</strong><small>Computer Science Student</small></div>
-          <span class="status">Open to internships</span>
+          <span class="status">Open to internships <a class="btn sm secondary" href="mailto:okirorinnocent49@gmail.com">Email me</a></span>
         </div>
         <p>Based in Mbarara, Uganda. Interested in practical AI, useful software, and responsible technology.</p>
       </aside>
@@ -283,6 +318,25 @@ textarea{min-height:130px;resize:vertical}
         <p>I'm a Computer Science student who builds practical AI and data tools, from the first prototype to a live app people can open.</p>
       </div>
       <div class="grid-3" id="wgrid"></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-kicker">Selected work</div><h2>Projects I can show you.</h2><p class="note">Demo apps are hosted on free tiers and may be asleep, so see screenshots and code instead.</p></div>
+      </div>
+      <div class="projects-grid" id="pgrid"></div>
+    </div>
+  </section>
+
+  <section id="case-study">
+    <div class="container">
+      <div class="section-head"><div><div class="section-kicker">Flagship case study</div><h2>From mass spectra to molecule predictions.</h2></div><p>A closer look at the CASMI26 predictor and the decisions behind it.</p></div>
+      <div class="case-study">
+        <div class="card"><dl><dt>Problem</dt><dd>Mass-spectrometry data is complex, and identifying likely molecular structures requires a repeatable workflow.</dd><dt>My approach</dt><dd>I built a data pipeline that cleans Parquet spectra, engineers features and trains a model for prediction.</dd><dt>Tech used</dt><dd>Python, Pandas, NumPy, Scikit-learn, Parquet and Streamlit.</dd></dl></div>
+        <div class="card"><dl><dt>Challenges</dt><dd>Working with high-dimensional spectra, choosing useful features and making results understandable.</dd><dt>What I learned</dt><dd>Good data preparation and clear evaluation matter as much as the model itself.</dd><dt>Screenshots</dt><dd>Replace the placeholder project image in the Projects data with a real capture when available.</dd></dl></div>
+      </div>
     </div>
   </section>
 
@@ -310,7 +364,7 @@ textarea{min-height:130px;resize:vertical}
           </div>
         </div>
         <figure class="card photo-card reveal" style="margin:0">
-          <img src="school.png" alt="Moments from university and the Global AI Community meetup" loading="lazy">
+          <img src="school.png" alt="Moments from university and the Global AI Community meetup" width="640" height="480" loading="lazy">
           <figcaption>Campus life and the Global AI Community meetup.</figcaption>
         </figure>
       </div>
@@ -335,6 +389,21 @@ textarea{min-height:130px;resize:vertical}
       </div>
       <div class="fchips" id="cfilter"></div>
       <div class="grid-3" id="cgrid"></div>
+      <button class="btn secondary" id="certMore" type="button" hidden>View all certificates</button>
+    </div>
+  </section>
+
+  <section id="learning">
+    <div class="container">
+      <div class="section-head"><div><div class="section-kicker">Learning log</div><h2>What I'm exploring lately.</h2></div><p>Short notes from the topics I'm studying and practising.</p></div>
+      <div class="learning-grid" id="lgrid"></div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-head"><div><div class="section-kicker">Kind words</div><h2>Testimonials.</h2></div></div>
+      <div class="testimonial-grid" id="tgrid"></div>
     </div>
   </section>
 
@@ -389,11 +458,13 @@ textarea{min-height:130px;resize:vertical}
 </main>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Certificate viewer"><button class="icon-btn" id="lbx" type="button" aria-label="Close">✕</button><img id="lbi" alt=""><div class="lbc" id="lbc"></div></div>
+<div class="project-modal" id="pmodal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="project-dialog"><button class="icon-btn close-modal" id="pmx" type="button" aria-label="Close project details">✕</button><div class="section-kicker">Project details</div><h2 id="modalTitle"></h2><img id="modalImage" alt=""><p id="modalDescription"></p><h3>Key features</h3><ul class="modal-features" id="modalFeatures"></ul><a class="btn primary" id="modalGithub" href="" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></div></div>
 
 <footer class="footer">
   <div class="container footer-inner">
     <span>© 2026 Innocent Okiror · Building step by step</span>
     <span>BSc Computer Science · MUST</span>
+    <span class="footer-socials" id="footerSocials"></span>
     <a href="#home">Back to top ↑</a>
   </div>
 </footer>
@@ -429,6 +500,24 @@ const WHAT = [
   { ic: "♥", t: "I make websites for organisations and causes.", d: "Fast, simple sites for community and non-profit groups, with a database and online donations or enquiries." },
   { ic: "▶", t: "I teach digital skills on TikTok and YouTube.", d: "Practical lessons that help people build confidence with digital tools, technology and everyday online skills." },
   { ic: "⬡", t: "I'm learning to make software secure.", d: "I'm studying cyber security and software architecture so what I build protects data and stays dependable." }];
+const placeholder = title => "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"><rect width="1280" height="720" fill="#172238"/><circle cx="1080" cy="120" r="220" fill="#86a3ff" opacity=".18"/><text x="70" y="350" fill="#f5f7ff" font-family="Arial,sans-serif" font-size="54" font-weight="700">${title}</text><text x="70" y="420" fill="#69e6c0" font-family="Arial,sans-serif" font-size="24">Replace with a project screenshot</text></svg>`);
+const PROJECTS = [
+  { t: "Portfolio site with Supabase guestbook", problem: "A fast personal site that shares my work and lets visitors leave a note.", tech: ["HTML", "CSS", "JavaScript", "Supabase"], image: placeholder("Portfolio + Guestbook"), alt: "Placeholder screenshot of the portfolio site", desc: "A responsive, accessible portfolio built without a framework, with a Supabase-powered guestbook and contact form.", features: ["Data-driven content arrays", "Dark and light themes", "Supabase REST integration"], github: "https://github.com/okirorinnocent" },
+  { t: "Gemini AI chat app", problem: "Make a conversational AI assistant approachable through a simple web interface.", tech: ["Python", "Streamlit", "Google Gemini"], image: placeholder("Gemini AI Chat"), alt: "Placeholder screenshot of the Gemini AI chat app", desc: "A Streamlit chat experience for experimenting with Gemini prompts, custom instructions and useful assistant workflows.", features: ["Conversational interface", "Custom assistant behaviour", "Streamlit deployment"], github: "https://github.com/okirorinnocent" },
+  { t: "Weather prediction ML app", problem: "Turn trained weather models into forecasts people can use without a notebook.", tech: ["Python", "Scikit-learn", "Joblib", "Streamlit"], image: placeholder("Weather ML"), alt: "Placeholder screenshot of the weather prediction app", desc: "A small machine learning application that loads trained models and makes forecasts from user-provided features.", features: ["Model loading with Joblib", "Input validation", "Readable forecast results"], github: "https://github.com/okirorinnocent" },
+  { t: "CASMI26 mass-spectra predictor", problem: "Help identify likely molecules from mass-spectrometry data.", tech: ["Python", "Pandas", "Parquet", "Scikit-learn"], image: placeholder("CASMI26 Predictor"), alt: "Placeholder screenshot of the CASMI26 predictor", desc: "A flagship data and machine learning workflow for preparing mass spectra and predicting molecular structures.", features: ["Parquet data pipeline", "Feature preparation", "Model evaluation workflow"], github: "https://github.com/okirorinnocent" },
+  { t: "Waste sorter image classifier", problem: "Make waste sorting more understandable with an image-based classifier.", tech: ["Teachable Machine", "TensorFlow.js", "JavaScript"], image: placeholder("Waste Sorter"), alt: "Placeholder screenshot of the waste sorter classifier", desc: "A browser-based image classifier trained with Teachable Machine and run with TensorFlow.js.", features: ["Camera or image input", "Client-side inference", "Clear sorting categories"], github: "https://github.com/okirorinnocent" }
+];
+const LEARNING_LOG = [
+  { date: "October 2026", title: "Google Earth Engine", summary: "Learning how satellite imagery and geospatial datasets can support practical environmental questions." },
+  { date: "October 2026", title: "Digital logic", summary: "Practising Boolean algebra, logic gates and the foundations behind how computers make decisions." },
+  { date: "September 2026", title: "Calculus for computing", summary: "Strengthening limits, derivatives and integrals so the maths behind models feels more intuitive." },
+  { date: "September 2026", title: "Kaggle quantum circuit compilation", summary: "Exploring how circuits are represented and optimized while learning the ideas behind quantum workflows." }
+];
+const TESTIMONIALS = [
+  { quote: "Innocent brings curiosity, consistency and a practical mindset to every project.", name: "Placeholder name", role: "Placeholder role" },
+  { quote: "He communicates clearly and keeps learning until the work is useful.", name: "Placeholder name", role: "Placeholder role" }
+];
 const SKILLS = [
   { ic: "◉", t: "AI & Prompting", lv: "Strongest", d: "Designing prompts and building assistants on top of LLMs such as Google Gemini.", k: ["Prompt Engineering", "AI Tools", "Google GenAI SDK"] },
   { ic: "⌘", t: "Web apps & backends", lv: "Growing", d: "Shipping small apps quickly and storing data safely with row-level security.", k: ["Streamlit", "Supabase & REST", "HTML/CSS/JS"] },
@@ -479,23 +568,46 @@ document.addEventListener("click", e => { if (!e.target.closest(".topbar")) clos
 
 /* content */
 $("#soc").innerHTML = SOCIALS.map(([i, n, u]) => `<a href="${u}" target="_blank" rel="noopener">${ICONS[i]}${n} ↗</a>`).join("");
+$("#footerSocials").innerHTML = SOCIALS.filter(([i]) => i === "github" || i === "linkedin").map(([i, n, u]) => `<a href="${u}" target="_blank" rel="noopener noreferrer" aria-label="${n}">${ICONS[i]}</a>`).join("");
 $("#learn").innerHTML = LEARN.map(x => `<span class="tag">${x}</span>`).join("");
 $("#s-certs").textContent = CERTS.length;
 const tags = k => `<div class="tag-row">${k.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div>`;
 $("#wgrid").innerHTML = WHAT.map(w => `<article class="card hov reveal"><div class="card-icon" aria-hidden="true">${w.ic}</div><h3>${esc(w.t)}</h3><p>${esc(w.d)}</p></article>`).join("");
 $("#skgrid").innerHTML = SKILLS.map(s => `<article class="card hov skill-card reveal"><div class="card-icon" aria-hidden="true">${s.ic}</div><h3>${esc(s.t)} <span class="lvl">${esc(s.lv)}</span></h3><p>${esc(s.d)}</p>${tags(s.k)}</article>`).join("");
+$("#pgrid").innerHTML = PROJECTS.map((p, k) => `<article class="card project-card reveal" tabindex="0" role="button" data-project="${k}" aria-label="View details for ${esc(p.t)}"><img class="project-thumb" src="${p.image}" alt="${esc(p.alt)}" width="640" height="360" loading="lazy"><div class="project-body"><h3>${esc(p.t)}</h3><p>${esc(p.problem)}</p>${tags(p.tech)}<a class="btn secondary sm" href="${p.github}" target="_blank" rel="noopener noreferrer" data-project-link>View on GitHub ↗</a></div></article>`).join("");
+$("#lgrid").innerHTML = LEARNING_LOG.map(l => `<article class="card learning-card"><time>${esc(l.date)}</time><h3>${esc(l.title)}</h3><p>${esc(l.summary)}</p></article>`).join("");
+if (TESTIMONIALS.length) $("#tgrid").innerHTML = TESTIMONIALS.map(t => `<article class="card"><p class="quote">“${esc(t.quote)}”</p><p style="margin-top:14px"><strong>${esc(t.name)}</strong><br><span class="mu">${esc(t.role)}</span></p></article>`).join("");
+else $("#testimonials").hidden = true;
 $("#clinks").innerHTML = [["✉", "Email", MAIL, gm("Hello Innocent")], ["whatsapp", "WhatsApp", "+256 726 278 320", WA], ["linkedin", "LinkedIn", "innocent-okiror", LI], ["github", "GitHub", "@" + GH, "https://github.com/" + GH], ["tiktok", "TikTok", "@innocentokiror1", TT], ["youtube", "YouTube", "@InnocentOkiror-d4o", YT], ["instagram", "Instagram", "@innoc_entokiror", IG]].map(([i, n, v, u]) => `<a class="contact-link" href="${u}" target="_blank" rel="noopener"><span aria-hidden="true">${ICONS[i] || i}</span><span><strong>${n}</strong><small>${esc(v)}</small></span></a>`).join("");
+
+/* project details modal */
+let projectFocus = null;
+function openProject(k) {
+  const p = PROJECTS[k]; projectFocus = document.activeElement;
+  $("#modalTitle").textContent = p.t; $("#modalImage").src = p.image; $("#modalImage").alt = p.alt;
+  $("#modalDescription").textContent = p.desc; $("#modalFeatures").innerHTML = p.features.map(f => `<li>${esc(f)}</li>`).join("");
+  $("#modalGithub").href = p.github; $("#pmodal").hidden = false; $("#pmx").focus();
+}
+function closeProject() { $("#pmodal").hidden = true; if (projectFocus) projectFocus.focus() }
+$("#pgrid").onclick = e => { if (!e.target.closest("[data-project-link]")) { const card = e.target.closest("[data-project]"); if (card) openProject(+card.dataset.project) } };
+$("#pgrid").onkeydown = e => { if ((e.key === "Enter" || e.key === " ") && !e.target.closest("[data-project-link]")) { e.preventDefault(); openProject(+e.target.closest("[data-project]").dataset.project) } };
+$("#pmx").onclick = closeProject; $("#pmodal").onclick = e => { if (e.target.id === "pmodal") closeProject() };
+addEventListener("keydown", e => { if (e.key === "Escape" && !$("#pmodal").hidden) closeProject() });
 
 /* certificates */
 const CAND = k => ["certs/" + k + "-t.jpg", "certs/" + k + ".jpg", "certs/" + k + ".png", "certs/" + k + ".jpeg"];
 function imgFail(el) { const c = CERTS[+el.dataset.k], n = (+el.dataset.n || 0) + 1, L = CAND(c.img); if (n < L.length) { el.dataset.n = n; el.src = L[n] } else { el.parentElement.classList.add("ph"); el.replaceWith(Object.assign(document.createElement("span"), { textContent: c.i })) } }
-let cf = "All";
+let cf = "All", certLimit = 6;
+const certCategory = c => c.c.includes("AI") ? "AI" : c.c.includes("Cloud") ? "Cloud" : c.c.includes("Data") ? "Data" : c.c.includes("Security") ? "Security" : "Other";
 function drawCerts() {
-  $("#cfilter").innerHTML = ["All", ...new Set(CERTS.map(c => c.c))].map(c => `<button type="button" class="${c === cf ? "on" : ""}" data-c="${esc(c)}">${esc(c)}${c === "All" ? " (" + CERTS.length + ")" : ""}</button>`).join("");
-  $("#cgrid").innerHTML = CERTS.map((c, k) => ({ c, k })).filter(o => cf === "All" || o.c.c === cf).map(({ c, k }) => {
+  const filtered = CERTS.map((c, k) => ({ c, k })).filter(o => cf === "All" || certCategory(o.c) === cf);
+  $("#cfilter").innerHTML = ["All", "AI", "Cloud", "Data", "Security", "Other"].map(c => `<button type="button" class="${c === cf ? "on" : ""}" data-c="${c}">${c}${c === "All" ? " (" + CERTS.length + ")" : ""}</button>`).join("");
+  $("#cgrid").innerHTML = filtered.slice(0, certLimit).map(({ c, k }) => {
     const src = c.img && (typeof TH !== "undefined" && TH[c.img] || CAND(c.img)[0]), has = c.img || c.pdf;
     return `<article class="card cert${has ? "" : " noimg"}" data-k="${k}"${has ? ' tabindex="0" role="button"' : ""} aria-label="${esc(c.t)}"><div class="ct${c.img ? "" : " ph"}">${c.img ? `<img src="${src}" data-k="${k}" onerror="imgFail(this)" alt="Certificate: ${esc(c.t)}" loading="lazy">` : `<span>${esc(c.i)}${c.pdf ? "<em>View PDF</em>" : ""}</span>`}<span class="dt">${esc(c.d)}</span></div><div class="cb"><span class="cat">${esc(c.c)}</span><h3>${esc(c.t)}</h3><p>${esc(c.i)}</p>${c.id ? `<small class="mu">ID ${esc(c.id)}</small>` : ""}</div></article>`
-  }).join("")
+  }).join("");
+  $("#certMore").hidden = filtered.length <= 6 || certLimit >= filtered.length;
+  $("#certMore").textContent = certLimit >= filtered.length ? "Show fewer" : "View all certificates";
 }
 let lastFocus = null;
 function openLb(k) {
@@ -506,7 +618,8 @@ function openLb(k) {
   lastFocus = document.activeElement; $("#lb").hidden = false; $("#lbx").focus()
 }
 function closeLb() { $("#lb").hidden = true; if (lastFocus) lastFocus.focus() }
-$("#cfilter").onclick = e => { const b = e.target.closest("button"); if (b) { cf = b.dataset.c; drawCerts() } };
+$("#cfilter").onclick = e => { const b = e.target.closest("button"); if (b) { cf = b.dataset.c; certLimit = 6; drawCerts() } };
+$("#certMore").onclick = () => { certLimit = certLimit >= CERTS.filter(c => cf === "All" || certCategory(c) === cf).length ? 6 : CERTS.length; drawCerts() };
 $("#cgrid").onclick = e => { const a = e.target.closest(".cert"); if (a && !a.classList.contains("noimg")) openLb(+a.dataset.k) };
 $("#cgrid").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { const a = e.target.closest(".cert"); if (a && a.getAttribute("role")) { e.preventDefault(); openLb(+a.dataset.k) } } };
 $("#lb").onclick = e => { if (e.target.id !== "lbi" && e.target.tagName !== "A") closeLb() };
