@@ -28,9 +28,10 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 
 | Project | Category | Summary |
 |---|---|---|
-| OKIROR'S AI: Intelligent Workspace Companion | Artificial Intelligence | Dark-themed conversational assistant powered by Google Gemini with customizable persona instructions |
-| Weather Prediction ML Pipeline | Machine Learning | Streamlit app that loads trained `.pkl` models with Joblib for forecasts and feature inference |
-| CASMI26 Molecule ID & Mass Spectra Predictor | Machine Learning | Random Forest pipeline over Parquet mass-spectrometry data to predict SMILES molecular structures |
+| MedSupply Uganda pharmacy marketplace | Healthcare / e-commerce | Marketplace for verified wholesale medicines, pharmacy orders and stock discovery |
+| CASMI26 Molecule ID & Mass Spectra Predictor | Machine Learning | Random Forest pipeline over Parquet mass-spectrometry data to predict molecular structures |
+| Basel Precipitation Intelligence Platform | Machine Learning | Automated inference platform for high-precision precipitation forecasting |
+| Waste sorter image classifier | Computer vision | Browser-based waste classification with Teachable Machine and TensorFlow.js |
 
 ## Tech Stack
 
