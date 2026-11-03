@@ -1819,8 +1819,13 @@
     function imgFail(el) { const c = CERTS[+el.dataset.k], n = (+el.dataset.n || 0) + 1, L = CAND(c.img); if (n < L.length) { el.dataset.n = n; el.src = L[n] } else { el.parentElement.classList.add("ph"); el.replaceWith(Object.assign(document.createElement("span"), { textContent: c.i })) } }
     let cf = "All", certLimit = 6;
     const certCategory = c => c.c.includes("AI") ? "AI" : c.c.includes("Cloud") ? "Cloud" : c.c.includes("Data") ? "Data" : c.c.includes("Security") ? "Security" : "Other";
+    const certGroups = { All: CERTS.map((c, k) => ({ c, k })) };
+    CERTS.forEach((c, k) => {
+      const category = certCategory(c);
+      (certGroups[category] || (certGroups[category] = [])).push({ c, k });
+    });
     function drawCerts() {
-      const filtered = CERTS.map((c, k) => ({ c, k })).filter(o => cf === "All" || certCategory(o.c) === cf);
+      const filtered = certGroups[cf] || certGroups.All;
       $("#cfilter").innerHTML = ["All", "AI", "Cloud", "Data", "Security", "Other"].map(c => `<button type="button" class="${c === cf ? "on" : ""}" data-c="${c}">${c}${c === "All" ? " (" + CERTS.length + ")" : ""}</button>`).join("");
       $("#cgrid").innerHTML = filtered.slice(0, certLimit).map(({ c, k }) => {
         const src = c.img && (typeof TH !== "undefined" && TH[c.img] || CAND(c.img)[0]), has = c.img || c.pdf;
@@ -1839,7 +1844,7 @@
     }
     function closeLb() { $("#lb").hidden = true; if (lastFocus) lastFocus.focus() }
     $("#cfilter").onclick = e => { const b = e.target.closest("button"); if (b) { cf = b.dataset.c; certLimit = 6; drawCerts() } };
-    $("#certMore").onclick = () => { certLimit = certLimit >= CERTS.filter(c => cf === "All" || certCategory(c) === cf).length ? 6 : CERTS.length; drawCerts() };
+    $("#certMore").onclick = () => { const count = (certGroups[cf] || certGroups.All).length; certLimit = certLimit >= count ? 6 : count; drawCerts() };
     $("#cgrid").onclick = e => { const a = e.target.closest(".cert"); if (a && !a.classList.contains("noimg")) openLb(+a.dataset.k) };
     $("#cgrid").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { const a = e.target.closest(".cert"); if (a && a.getAttribute("role")) { e.preventDefault(); openLb(+a.dataset.k) } } };
     $("#lb").onclick = e => { if (e.target.id !== "lbi" && e.target.tagName !== "A") closeLb() };
@@ -1851,7 +1856,20 @@
     $$(".reveal").forEach(el => reveal ? reveal.observe(el) : el.classList.add("visible"));
     const links = $$(".navlinks a");
     if ("IntersectionObserver" in window) {
-      const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => { const on = a.getAttribute("href") === "#" + e.target.id; a.classList.toggle("active", on); on ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current") }) }), { rootMargin: "-45% 0px -50% 0px" });
+      const linksBySection = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+      let activeLink = null;
+      const spy = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const nextLink = linksBySection.get(e.target.id);
+        if (!nextLink || nextLink === activeLink) return;
+        if (activeLink) {
+          activeLink.classList.remove("active");
+          activeLink.removeAttribute("aria-current");
+        }
+        nextLink.classList.add("active");
+        nextLink.setAttribute("aria-current", "true");
+        activeLink = nextLink;
+      }), { rootMargin: "-45% 0px -50% 0px" });
       $$("main section").forEach(s => spy.observe(s));
     }
 
