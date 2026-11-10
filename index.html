@@ -1034,7 +1034,8 @@
 
     .gb-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
+      max-width: 640px;
       gap: 24px
     }
 
@@ -1616,7 +1617,7 @@
             <div class="section-kicker">Say hello</div>
             <h2>Guestbook.</h2>
           </div>
-          <p>Leave a short note. It appears here for the next visitor.</p>
+          <p>Leave me a short note.</p>
         </div>
         <div class="gb-grid">
           <div class="card">
@@ -1629,11 +1630,6 @@
               <button class="btn primary" type="submit">Post message</button>
               <p class="form-help" id="gnote" role="status"></p>
             </form>
-          </div>
-          <div class="card">
-            <div class="msgs" id="msgs">
-              <p class="empty">Loading messages…</p>
-            </div>
           </div>
         </div>
       </div>
@@ -1909,16 +1905,6 @@
     const ss = { get: k => { try { return sessionStorage.getItem(k) } catch (_) { return null } }, set: (k, v) => { try { sessionStorage.setItem(k, v) } catch (_) { } } };
     const cool = (k, s) => Date.now() - (+ss.get(k) || 0) < s * 1000;
     const say = (el, t, ok) => { el.className = "form-help " + (ok ? "ok" : "er"); el.setAttribute("role", ok ? "status" : "alert"); el.textContent = t };
-    async function loadMsgs() {
-      const box = $("#msgs"); if (!sbOn()) { box.innerHTML = '<p class="empty">Guestbook messages will appear here.</p>'; return }
-      try {
-        let rows;
-        try { rows = await sb("guestbook?select=name,message,created_at&approved=eq.true&order=created_at.desc&limit=20") }
-        catch (_) { rows = await sb("guestbook?select=name,message,created_at&order=created_at.desc&limit=20") }
-        box.innerHTML = rows.length ? rows.map(m => `<div class="msg"><b>${esc(m.name)}</b><small>${new Date(m.created_at).toLocaleDateString()}</small><p>${esc(m.message)}</p></div>`).join("") : '<p class="empty">Be the first to leave a message.</p>'
-      } catch (e) { box.innerHTML = '<p class="empty">Messages are unavailable right now.</p>' }
-    }
-    loadMsgs();
     let turnstileWidget = null;
     function renderContactTurnstile() {
       if (!window.turnstile || turnstileWidget !== null) return;
@@ -1936,7 +1922,7 @@
       if (!sbOn()) return say(note, "The guestbook opens soon. For now, please use the contact form.");
       if (cool("lg", 20)) return say(note, "Please wait 20 seconds before posting again.");
       btn.disabled = true; btn.textContent = "Posting...";
-      try { await sb("guestbook", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, message: m }) }); ss.set("lg", Date.now()); form.reset(); say(note, "Thank you! Your message has been posted.", 1); await loadMsgs() }
+      try { await sb("guestbook", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ name: n, message: m }) }); ss.set("lg", Date.now()); form.reset(); say(note, "Thank you! Your message has been sent.", 1) }
       catch (x) { say(note, `Could not post (HTTP ${x.status || "error"}${x.code ? " / " + x.code : ""}). Please try again.`) }
       finally { btn.disabled = false; btn.textContent = "Post message" }
     };
