@@ -1,6 +1,6 @@
 /* Service worker: offline-capable app shell.
    Bump VERSION whenever you deploy changes so users get fresh files. */
-const VERSION = "v7";
+const VERSION = "v8";
 const CACHE = "io-portfolio-" + VERSION;
 const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.png",
   "project-images/portfolio.png", "project-images/pharmacy.png", "project-images/casmi26.png",
@@ -21,7 +21,7 @@ self.addEventListener("activate", e => {
 
 self.addEventListener("fetch", e => {
   const req = e.request, url = new URL(req.url);
-  if (req.method !== "GET" || url.origin !== location.origin) return;   // Supabase, GitHub API, fonts: always live
+  if (req.method !== "GET" || url.origin !== location.origin || /^\/admin(\.html)?$/.test(url.pathname)) return;   // Supabase, GitHub API, fonts: always live
 
   // Pages: network first, fall back to cache when offline
   if (req.mode === "navigate") {
