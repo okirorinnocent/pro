@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Inbox</title>
+  <style>
+    :root { --bg:#f4f6fb; --card:#fff; --text:#16181d; --muted:#5d6472; --line:#e2e6ef; --brand:#335eea; --danger:#c0392b; --ok:#1e8e5a; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0f1218; --card:#171b24; --text:#e9ecf3; --muted:#9aa3b5; --line:#262c3a; --brand:#6b8cff; --danger:#ff6b5e; --ok:#4cd694; } }
+    * { box-sizing: border-box }
+    body { margin:0; font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--text) }
+    .wrap { max-width:860px; margin:0 auto; padding:20px 16px 60px }
+    h1 { font-size:1.4rem; margin:0 }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-top:16px }
+    input { width:100%; padding:11px 12px; margin:6px 0 14px; border:1px solid var(--line); border-radius:10px; background:var(--bg); color:var(--text); font:inherit }
+    button { font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--card); color:var(--text); padding:8px 14px; border-radius:10px }
+    button.primary { background:var(--brand); border-color:var(--brand); color:#fff; font-weight:600 }
+    button.danger { color:var(--danger) }
+    button:disabled { opacity:.6; cursor:default }
+    header { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap }
+    .bar { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px }
+    .tab[aria-selected="true"] { background:var(--brand); border-color:var(--brand); color:#fff }
+    .item { border-top:1px solid var(--line); padding:14px 0 }
+    .item:first-child { border-top:0 }
+    .meta { color:var(--muted); font-size:.85rem; display:flex; gap:10px; flex-wrap:wrap }
+    .item p { margin:6px 0 10px; white-space:pre-wrap; overflow-wrap:anywhere }
+    .actions { display:flex; gap:8px; flex-wrap:wrap }
+    .actions a { text-decoration:none; padding:8px 14px; border:1px solid var(--line); border-radius:10px; color:var(--text) }
+    .note { min-height:1.4em; font-size:.92rem } .er { color:var(--danger) } .ok { color:var(--ok) }
+    .badge { font-size:.75rem; border:1px solid var(--line); border-radius:999px; padding:1px 8px }
+    .empty { color:var(--muted); text-align:center; padding:24px 0 }
+    [hidden] { display:none !important }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📬 Inbox</h1>
+    <div class="actions" id="topbtns" hidden>
+      <button id="refresh" type="button">Refresh</button>
+      <button id="out" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Login -->
+  <form class="card" id="login" autocomplete="on">
+    <label>Email<input id="em" type="email" autocomplete="username" required></label>
+    <label>Password<input id="pw" type="password" autocomplete="current-password" required></label>
+    <button class="primary" id="go" type="submit">Sign in</button>
+    <p class="note" id="lnote" role="alert"></p>
+  </form>
+
+  <!-- Dashboard -->
+  <main id="app" hidden>
+    <div class="bar" role="tablist">
+      <button class="tab" role="tab" id="t-contact" aria-selected="true">Messages sent to me <span class="badge" id="c-contact">0</span></button>
+      <button class="tab" role="tab" id="t-guest" aria-selected="false">Guestbook <span class="badge" id="c-guest">0</span></button>
+    </div>
+    <div class="card"><p class="note" id="note"></p><div id="list"></div></div>
+  </main>
+</div>
+
+<script>
+  // Same project and PUBLISHABLE key as index.html. Safe to be public: access is enforced by login + Row Level Security.
+  const SB = { url: "https://oggnhlnsfgfcfgppuvuh.supabase.co", key: "sb_publishable_u0f65Ghe6cQjFubMF0Q1wQ_--Q9FJM8" };
+  const $ = s => document.querySelector(s);
+  const store = { get: k => { try { return sessionStorage.getItem(k) } catch (_) { return null } }, set: (k, v) => { try { sessionStorage.setItem(k, v) } catch (_) {} }, del: k => { try { sessionStorage.removeItem(k) } catch (_) {} } };
+  let token = store.get("adm_token"), tab = "contact", data = { contact: [], guest: [] };
+
+  async function api(path, opt = {}) {
+    const r = await fetch(SB.url + path, { ...opt, headers: { apikey: SB.key, Authorization: "Bearer " + (token || SB.key), "Content-Type": "application/json", ...(opt.headers || {}) } });
+    const raw = await r.text(); let body = null; try { body = raw ? JSON.parse(raw) : null } catch (_) { body = raw }
+    if (!r.ok) { const e = new Error(body?.msg || body?.message || body?.error_description || "HTTP " + r.status); e.status = r.status; throw e }
+    return body;
+  }
+
+  function show(loggedIn) { $("#login").hidden = loggedIn; $("#app").hidden = !loggedIn; $("#topbtns").hidden = !loggedIn }
+
+  $("#login").onsubmit = async e => {
+    e.preventDefault(); const note = $("#lnote"), btn = $("#go"); note.className = "note"; note.textContent = ""; btn.disabled = true; btn.textContent = "Signing in...";
+    try {
+      const s = await api("/auth/v1/token?grant_type=password", { method: "POST", body: JSON.stringify({ email: $("#em").value.trim(), password: $("#pw").value }) });
+      token = s.access_token; store.set("adm_token", token); $("#pw").value = ""; show(true); load();
+    } catch (x) { note.className = "note er"; note.textContent = x.status === 400 ? "Wrong email or password." : "Could not sign in: " + x.message }
+    finally { btn.disabled = false; btn.textContent = "Sign in" }
+  };
+
+  function signOut(msg) { token = null; store.del("adm_token"); show(false); if (msg) { $("#lnote").className = "note er"; $("#lnote").textContent = msg } }
+  $("#out").onclick = () => signOut();
+  $("#refresh").onclick = () => load();
+  $("#t-contact").onclick = () => setTab("contact"); $("#t-guest").onclick = () => setTab("guest");
+  function setTab(t) { tab = t; $("#t-contact").setAttribute("aria-selected", t === "contact"); $("#t-guest").setAttribute("aria-selected", t === "guest"); render() }
+
+  async function load() {
+    const note = $("#note"); note.className = "note"; note.textContent = "Loading...";
+    try {
+      const [c, g] = await Promise.all([
+        api("/rest/v1/contact_messages?select=*&order=created_at.desc&limit=500"),
+        api("/rest/v1/guestbook?select=*&order=created_at.desc&limit=500")
+      ]);
+      data = { contact: c, guest: g }; note.textContent = ""; render();
+    } catch (x) {
+      if (x.status === 401 || /JWT/i.test(x.message)) return signOut("Session expired. Please sign in again.");
+      note.className = "note er"; note.textContent = "Could not load: " + x.message + (x.status === 403 || x.status === 404 ? " (check you ran supabase/admin.sql with your email)" : "");
+    }
+  }
+
+  const fmt = d => new Date(d).toLocaleString();
+  function el(tag, props = {}, ...kids) { const n = document.createElement(tag); Object.assign(n, props); kids.forEach(k => n.append(k)); return n }
+
+  function render() {
+    $("#c-contact").textContent = data.contact.length; $("#c-guest").textContent = data.guest.length;
+    const list = $("#list"); list.replaceChildren();
+    const rows = data[tab];
+    if (!rows.length) return list.append(el("p", { className: "empty", textContent: "Nothing here yet." }));
+    rows.forEach(r => {
+      const meta = el("div", { className: "meta" }, el("b", { textContent: r.name }), fmt(r.created_at));
+      const actions = el("div", { className: "actions" });
+      if (tab === "contact") {
+        meta.append(r.email);
+        actions.append(el("a", { href: "mailto:" + encodeURIComponent(r.email).replace(/%40/g, "@") + "?subject=" + encodeURIComponent("Re: your message"), textContent: "Reply by email" }));
+      } else {
+        meta.append(el("span", { className: "badge", textContent: r.approved === false ? "hidden" : "visible" }));
+        const tg = el("button", { type: "button", textContent: r.approved === false ? "Show on site" : "Hide from site" });
+        tg.onclick = () => act(tg, () => api("/rest/v1/guestbook?id=eq." + r.id, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ approved: r.approved === false }) }));
+        actions.append(tg);
+      }
+      const del = el("button", { type: "button", className: "danger", textContent: "Delete" });
+      del.onclick = () => { if (confirm("Delete this message permanently?")) act(del, () => api("/rest/v1/" + (tab === "contact" ? "contact_messages" : "guestbook") + "?id=eq." + r.id, { method: "DELETE", headers: { Prefer: "return=minimal" } })) };
+      actions.append(del);
+      list.append(el("div", { className: "item" }, meta, el("p", { textContent: r.message }), actions));
+    });
+  }
+
+  async function act(btn, fn) {
+    btn.disabled = true;
+    try { await fn(); await load() } catch (x) { btn.disabled = false; const n = $("#note"); n.className = "note er"; n.textContent = "Action failed: " + x.message }
+  }
+
+  if (token) { show(true); load() } else show(false);
+</script>
+</body>
+</html>
