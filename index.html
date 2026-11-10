@@ -1923,7 +1923,7 @@
     function renderContactTurnstile() {
       if (!window.turnstile || turnstileWidget !== null) return;
       turnstileWidget = turnstile.render('#ts-box', {
-        sitekey: '0x4AAAAAAF5olhXwC3MLpFYZ', action: 'contact', retry: 'auto', 'refresh-expired': 'auto',
+        sitekey: '0x4AAAAAAF7TCXLM4iHA0hlv', action: 'contact', retry: 'auto', 'refresh-expired': 'auto',
         'error-callback': code => { console.warn('Turnstile error', code); say($("#cnote"), "The security check could not load on this address. Please refresh, or use the Gmail / WhatsApp buttons below.") }
       });
     }
