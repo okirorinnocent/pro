@@ -18,7 +18,7 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 - **Learning log, flagship case study and testimonials** driven by arrays in `index.html`.
 - **Certificates gallery** with category filter and a lightbox viewer.
 - **Guestbook**: visitors can leave a message (stored in Supabase).
-- **Contact form**: messages are saved to Supabase, plus direct Gmail and WhatsApp links.
+- **Contact form**: messages are saved to Supabase after a Cloudflare Turnstile challenge, plus direct Gmail and WhatsApp links.
 - **Downloadable CV** (`my_cv.pdf`).
 - **SEO / sharing ready**: canonical custom-domain URL, Open Graph/Twitter tags, Person JSON-LD and Vercel Analytics.
 - **Responsive and accessible**: mobile layout, focus outlines, semantic sections.
@@ -32,6 +32,7 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 | CASMI26 Molecule ID & Mass Spectra Predictor | Machine Learning | Random Forest pipeline over Parquet mass-spectrometry data to predict molecular structures |
 | Basel Precipitation Intelligence Platform | Machine Learning | Automated inference platform for high-precision precipitation forecasting |
 | Waste sorter image classifier | Computer vision | Browser-based waste classification with Teachable Machine and TensorFlow.js |
+| SafeShare | Privacy / security | Offline-first tool for password-protected messages and files, including photo-based sharing |
 
 ## Tech Stack
 
