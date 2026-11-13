@@ -17,12 +17,12 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 - **Projects showcase** with responsive cards, screenshot placeholders, GitHub links and accessible detail modals.
 - **Learning log, flagship case study and testimonials** driven by arrays in `index.html`.
 - **Certificates gallery** with category filter and a lightbox viewer.
-- **Guestbook**: visitors can leave a message (stored in Supabase).
-- **Contact form**: messages are saved to Supabase after a Cloudflare Turnstile challenge, plus direct Gmail and WhatsApp links.
+- **Guestbook**: visitors leave a note; notes appear after you approve them in `/admin`.
+- **Contact form**: Turnstile is verified server-side by an Edge Function before the message is saved, plus direct Gmail and WhatsApp links.
 - **Downloadable CV** (`my_cv.pdf`).
 - **SEO / sharing ready**: canonical custom-domain URL, Open Graph/Twitter tags, Person JSON-LD and Vercel Analytics.
 - **Responsive and accessible**: mobile layout, focus outlines, semantic sections.
-- **Security headers** configured through `vercel.json`.
+- **Security headers** (CSP, HSTS, frame and referrer policies) configured through `vercel.json`.
 
 ## Featured Projects
 
@@ -49,7 +49,9 @@ A fast, single-page personal portfolio for **Innocent Okiror**, a BSc Computer S
 ├── index.html      # The entire site (markup, styles, scripts)
 ├── vercel.json     # Clean URLs + security headers
 ├── sw.js, pwa.js, manifest.webmanifest, icons/   # Installable PWA
-├── supabase/guestbook.sql   # Guestbook table policies and grants
+├── supabase/guestbook.sql, admin.sql   # Tables, locked-down policies, admin access
+├── supabase/functions/submit/          # Edge Function: Turnstile check + validation + rate limit
+├── 404.html, robots.txt, sitemap.xml, og-image.png
 ├── my_cv.pdf       # CV, served by the "Download CV" button
 ├── profile.png     # Portrait on the Home page and Open Graph image
 ├── school.png      # Photo collage in the About section
@@ -72,48 +74,29 @@ npx serve .
 
 Then open `http://localhost:8000`.
 
-## Supabase Setup
+## Supabase Setup (secure version)
 
-The guestbook and contact form need two tables.
+The guestbook and contact form use two tables, but **visitors never write to them directly any more**.
+Posts go through an Edge Function that verifies Cloudflare Turnstile **on the server**, validates the
+input and rate-limits per network. The browser can only *read approved guestbook notes*.
 
-```sql
-create table guestbook (
-  id bigint generated always as identity primary key,
-  name text not null,
-  message text not null,
-  approved boolean default true,
-  created_at timestamptz default now()
-);
+1. **SQL Editor**: run `supabase/guestbook.sql`, then `supabase/admin.sql`
+   (replace `YOUR_ADMIN_USER_UUID` with your admin user's id, in the editor only, never in Git).
+2. **Authentication**: create your admin user and turn **off** "Allow new users to sign up".
+3. **Edge Function** (needs the [Supabase CLI](https://supabase.com/docs/guides/cli)):
+   ```bash
+   supabase login
+   supabase link --project-ref <project-ref>
+   supabase secrets set TURNSTILE_SECRET_KEY=<turnstile secret key> IP_SALT=<long random string>
+   supabase functions deploy submit --no-verify-jwt
+   ```
+   Optional: `supabase secrets set ALLOWED_ORIGINS=https://www.okirorinnocent.tech,https://okirorinnocent.tech`
+4. In `index.html`, set your project URL and **publishable (anon) key** in `SB`, and your Turnstile **site key** in `TS_KEY`.
+   Only ever use the publishable key in frontend code, never the `service_role` key or the Turnstile secret.
+5. Visit `/admin`, sign in and approve guestbook notes (new notes start as *pending*).
 
-create table contact_messages (
-  id bigint generated always as identity primary key,
-  name text not null,
-  email text not null,
-  message text not null,
-  created_at timestamptz default now()
-);
-
--- Enable Row Level Security
-alter table guestbook enable row level security;
-alter table contact_messages enable row level security;
-
--- Guestbook: anyone can post; only approved messages are readable
-create policy "guestbook read"   on guestbook for select using (approved = true);
-create policy "guestbook insert" on guestbook for insert with check (true);
-
--- Contact: anyone can send, but nobody can read from the browser
-create policy "contact insert" on contact_messages for insert with check (true);
-```
-
-Also run the grants in `supabase/guestbook.sql` (without them posting fails with HTTP 401 / 42501).
-
-Then, in `index.html`, set your project URL and **publishable (anon) key**:
-
-```js
-const SB = { url: "https://<project-ref>.supabase.co", key: "<publishable-or-anon-key>" };
-```
-
-**Important:** only ever use the publishable/anon key in frontend code, never the `service_role` key. Row Level Security is what protects your data, so keep the policies above (or stricter) enabled.
+Security headers (including a Content-Security-Policy and HSTS) are in `vercel.json`. If you add a new
+external script, font or API, add its host to the CSP there or the browser will block it.
 
 ## Customize
 
@@ -130,7 +113,7 @@ const SB = { url: "https://<project-ref>.supabase.co", key: "<publishable-or-ano
 | Theme colors | CSS variables in `:root` and `:root[data-theme=light]` |
 | Contact links | Gmail and WhatsApp `href`s in the Contact section |
 
-Project cards currently use inline placeholders so the page works immediately. Replace each `image` value in `PROJECTS` with a local WebP screenshot or short demo asset, and replace the placeholder GitHub URLs with the specific repositories. Replace the two testimonial entries with real consented quotes, names and roles.
+Project screenshots are WebP files in `project-images/`. Add testimonials to the `TESTIMONIALS` array only when you have real, consented quotes; while it is empty the section is hidden. Certificates: put `certs/<key>-t.jpg` (small thumbnail) and `certs/<key>.pdf` (full file) in `certs/` and list the key in `FULLPDF`. After every deploy that changes files, bump `VERSION` in `sw.js`.
 
 ## Deploy to Vercel
 
@@ -141,6 +124,7 @@ Project cards currently use inline placeholders so the page works immediately. R
 
 `vercel.json` enables clean URLs and adds these headers to every response:
 
+- `Content-Security-Policy` (home and admin pages), `Strict-Transport-Security`
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: strict-origin-when-cross-origin`

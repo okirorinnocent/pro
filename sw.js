@@ -1,10 +1,10 @@
 /* Service worker: offline-capable app shell.
    Bump VERSION whenever you deploy changes so users get fresh files. */
-const VERSION = "v8";
+const VERSION = "v9";
 const CACHE = "io-portfolio-" + VERSION;
-const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.png",
-  "project-images/portfolio.png", "project-images/pharmacy.png", "project-images/casmi26.png",
-  "project-images/basel.png", "project-images/waste-sorter.png",
+const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.webp",
+  "project-images/portfolio.webp", "project-images/SafeShare.webp", "project-images/pharmacy.webp",
+  "project-images/casmi26.webp", "project-images/basel.webp", "project-images/waste-sorter.webp",
   "icons/icon-192.png?v=2", "icons/icon-512.png?v=2", "icons/icon-maskable-512.png?v=2", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -21,22 +21,30 @@ self.addEventListener("activate", e => {
 
 self.addEventListener("fetch", e => {
   const req = e.request, url = new URL(req.url);
-  if (req.method !== "GET" || url.origin !== location.origin || /^\/admin(\.html)?$/.test(url.pathname)) return;   // Supabase, GitHub API, fonts: always live
+  if (req.method !== "GET" || url.origin !== location.origin || /^\/admin(\.html)?$/.test(url.pathname)) return;   // Supabase, GitHub API, fonts, admin: always live
+  if (req.headers.has("range")) return;                      // let the browser stream PDFs/video itself
 
-  // Pages: network first, fall back to cache when offline
+  const isHome = url.pathname === "/" || url.pathname === "/index.html";
+
+  // Pages: network first. ONLY the real home page is stored as the offline copy
+  // (so opening a PDF or a 404 can never overwrite it).
   if (req.mode === "navigate") {
     e.respondWith(fetch(req).then(r => {
-      const copy = r.clone(); caches.open(CACHE).then(c => c.put("index.html", copy)); return r;
-    }).catch(() => caches.match("index.html").then(r => r || caches.match("./"))));
+      if (isHome && r.status === 200 && (r.headers.get("content-type") || "").includes("text/html")) {
+        const copy = r.clone(); caches.open(CACHE).then(c => c.put("index.html", copy));
+      }
+      return r;
+    }).catch(() => caches.match(req).then(hit => hit ||
+      (isHome || !/\.[a-z0-9]+$/i.test(url.pathname) ? caches.match("index.html").then(r => r || caches.match("./")) : Response.error()))));
     return;
   }
 
   // Images, certificates, scripts: serve cached copy instantly, refresh in background
   e.respondWith(caches.match(req).then(hit => {
     const net = fetch(req).then(r => {
-      if (r.ok) { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+      if (r.status === 200) { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
       return r;
-    }).catch(() => hit);
+    }).catch(() => hit || Response.error());
     return hit || net;
   }));
 });

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
   <title>Admin | Inbox</title>
   <style>
     :root { --bg:#f4f6fb; --card:#fff; --text:#16181d; --muted:#5d6472; --line:#e2e6ef; --brand:#335eea; --danger:#c0392b; --ok:#1e8e5a; }
@@ -65,14 +66,29 @@
   // Same project and PUBLISHABLE key as index.html. Safe to be public: access is enforced by login + Row Level Security.
   const SB = { url: "https://oggnhlnsfgfcfgppuvuh.supabase.co", key: "sb_publishable_u0f65Ghe6cQjFubMF0Q1wQ_--Q9FJM8" };
   const $ = s => document.querySelector(s);
-  const store = { get: k => { try { return sessionStorage.getItem(k) } catch (_) { return null } }, set: (k, v) => { try { sessionStorage.setItem(k, v) } catch (_) {} }, del: k => { try { sessionStorage.removeItem(k) } catch (_) {} } };
-  let token = store.get("adm_token"), tab = "contact", data = { contact: [], guest: [] };
+  // The session lives in memory only (never in sessionStorage/localStorage), so a script injected into
+  // the page can't read a saved token. Reloading the page signs you out; that is intentional.
+  let token = null, refresh = null, tab = "contact", data = { contact: [], guest: [] };
+  const IDLE_MS = 15 * 60 * 1000;     // auto sign-out after 15 minutes without activity
+  let idleTimer = null;
+  function bumpIdle() { clearTimeout(idleTimer); if (token) idleTimer = setTimeout(() => signOut("Signed out after 15 minutes of inactivity."), IDLE_MS) }
+  ["click", "keydown", "pointerdown"].forEach(ev => addEventListener(ev, bumpIdle, { passive: true }));
 
-  async function api(path, opt = {}) {
+  async function api(path, opt = {}, retry = true) {
     const r = await fetch(SB.url + path, { ...opt, headers: { apikey: SB.key, Authorization: "Bearer " + (token || SB.key), "Content-Type": "application/json", ...(opt.headers || {}) } });
     const raw = await r.text(); let body = null; try { body = raw ? JSON.parse(raw) : null } catch (_) { body = raw }
-    if (!r.ok) { const e = new Error(body?.msg || body?.message || body?.error_description || "HTTP " + r.status); e.status = r.status; throw e }
+    if (!r.ok) {
+      // access token expired: quietly get a new one once, then repeat the request
+      if (r.status === 401 && retry && refresh && !path.startsWith("/auth/") && await renew()) return api(path, opt, false);
+      const e = new Error(body?.msg || body?.message || body?.error_description || "HTTP " + r.status); e.status = r.status; throw e;
+    }
     return body;
+  }
+  async function renew() {
+    try {
+      const s = await api("/auth/v1/token?grant_type=refresh_token", { method: "POST", body: JSON.stringify({ refresh_token: refresh }) }, false);
+      token = s.access_token; refresh = s.refresh_token; return true;
+    } catch (_) { return false }
   }
 
   function show(loggedIn) { $("#login").hidden = loggedIn; $("#app").hidden = !loggedIn; $("#topbtns").hidden = !loggedIn }
@@ -81,12 +97,12 @@
     e.preventDefault(); const note = $("#lnote"), btn = $("#go"); note.className = "note"; note.textContent = ""; btn.disabled = true; btn.textContent = "Signing in...";
     try {
       const s = await api("/auth/v1/token?grant_type=password", { method: "POST", body: JSON.stringify({ email: $("#em").value.trim(), password: $("#pw").value }) });
-      token = s.access_token; store.set("adm_token", token); $("#pw").value = ""; show(true); load();
+      token = s.access_token; refresh = s.refresh_token; $("#pw").value = ""; show(true); bumpIdle(); load();
     } catch (x) { note.className = "note er"; note.textContent = x.status === 400 ? "Wrong email or password." : "Could not sign in: " + x.message }
     finally { btn.disabled = false; btn.textContent = "Sign in" }
   };
 
-  function signOut(msg) { token = null; store.del("adm_token"); show(false); if (msg) { $("#lnote").className = "note er"; $("#lnote").textContent = msg } }
+  function signOut(msg) { token = null; refresh = null; clearTimeout(idleTimer); data = { contact: [], guest: [] }; $("#list").replaceChildren(); show(false); if (msg) { $("#lnote").className = "note er"; $("#lnote").textContent = msg } }
   $("#out").onclick = () => signOut();
   $("#refresh").onclick = () => load();
   $("#t-contact").onclick = () => setTab("contact"); $("#t-guest").onclick = () => setTab("guest");
@@ -102,7 +118,7 @@
       data = { contact: c, guest: g }; note.textContent = ""; render();
     } catch (x) {
       if (x.status === 401 || /JWT/i.test(x.message)) return signOut("Session expired. Please sign in again.");
-      note.className = "note er"; note.textContent = "Could not load: " + x.message + (x.status === 403 || x.status === 404 ? " (check you ran supabase/admin.sql with your email)" : "");
+      note.className = "note er"; note.textContent = "Could not load: " + x.message + (x.status === 403 || x.status === 404 ? " (check you ran supabase/admin.sql with your admin user UUID)" : "");
     }
   }
 
@@ -110,7 +126,7 @@
   function el(tag, props = {}, ...kids) { const n = document.createElement(tag); Object.assign(n, props); kids.forEach(k => n.append(k)); return n }
 
   function render() {
-    $("#c-contact").textContent = data.contact.length; $("#c-guest").textContent = data.guest.length;
+    $("#c-contact").textContent = data.contact.length; const pend = data.guest.filter(g => !g.approved).length; $("#c-guest").textContent = pend ? pend + " pending / " + data.guest.length : data.guest.length;
     const list = $("#list"); list.replaceChildren();
     const rows = data[tab];
     if (!rows.length) return list.append(el("p", { className: "empty", textContent: "Nothing here yet." }));
@@ -121,9 +137,9 @@
         meta.append(r.email);
         actions.append(el("a", { href: "mailto:" + encodeURIComponent(r.email).replace(/%40/g, "@") + "?subject=" + encodeURIComponent("Re: your message"), textContent: "Reply by email" }));
       } else {
-        meta.append(el("span", { className: "badge", textContent: r.approved === false ? "hidden" : "visible" }));
-        const tg = el("button", { type: "button", textContent: r.approved === false ? "Show on site" : "Hide from site" });
-        tg.onclick = () => act(tg, () => api("/rest/v1/guestbook?id=eq." + r.id, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ approved: r.approved === false }) }));
+        meta.append(el("span", { className: "badge", textContent: r.approved ? "visible" : "pending" }));
+        const tg = el("button", { type: "button", className: r.approved ? "" : "primary", textContent: r.approved ? "Hide from site" : "Approve & show" });
+        tg.onclick = () => act(tg, () => api("/rest/v1/guestbook?id=eq." + r.id, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ approved: !r.approved }) }));
         actions.append(tg);
       }
       const del = el("button", { type: "button", className: "danger", textContent: "Delete" });
@@ -138,7 +154,7 @@
     try { await fn(); await load() } catch (x) { btn.disabled = false; const n = $("#note"); n.className = "note er"; n.textContent = "Action failed: " + x.message }
   }
 
-  if (token) { show(true); load() } else show(false);
+  show(false);
 </script>
 </body>
 </html>
