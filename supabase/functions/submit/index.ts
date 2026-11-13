@@ -4,7 +4,7 @@
 //
 // Deploy:   supabase functions deploy submit --no-verify-jwt
 //           (--no-verify-jwt because visitors are anonymous; Turnstile + the checks below protect it)
-// Secrets:  supabase secrets set TURNSTILE_SECRET_KEY=<your Turnstile secret key> IP_SALT=<any long random string>
+// Secrets:  supabase secrets set TURNSTILE_SECRET_KEY=<your Turnstile secret key> IP_SALT=<at least 32 random characters>
 //           Optional: ALLOWED_ORIGINS=https://www.okirorinnocent.tech,https://okirorinnocent.tech
 //           SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided to functions automatically.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -12,7 +12,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ??
   "https://www.okirorinnocent.tech,https://okirorinnocent.tech").split(",").map((s) => s.trim());
 const SECRET = Deno.env.get("TURNSTILE_SECRET_KEY") ?? "";
-const SALT = Deno.env.get("IP_SALT") ?? "change-me";
+const SALT = Deno.env.get("IP_SALT") ?? "";
+const CONFIGURED = Boolean(SECRET && SALT.length >= 32);
 const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
   auth: { persistSession: false },
 });
@@ -42,6 +43,7 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
   if (req.method !== "POST") return reply(405, { error: "Method not allowed" });
   if (!ALLOWED.includes(origin)) return reply(403, { error: "Origin not allowed" });
+  if (!CONFIGURED) return reply(503, { error: "Service is not configured" });
 
   const raw = await req.text();
   if (raw.length > 6000) return reply(413, { error: "Request too large", code: "invalid" });

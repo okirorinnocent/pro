@@ -87,12 +87,13 @@ input and rate-limits per network. The browser can only *read approved guestbook
    ```bash
    supabase login
    supabase link --project-ref <project-ref>
-   supabase secrets set TURNSTILE_SECRET_KEY=<turnstile secret key> IP_SALT=<long random string>
+   supabase secrets set TURNSTILE_SECRET_KEY=<turnstile secret key> IP_SALT=<at least 32 random characters>
    supabase functions deploy submit --no-verify-jwt
    ```
    Optional: `supabase secrets set ALLOWED_ORIGINS=https://www.okirorinnocent.tech,https://okirorinnocent.tech`
 4. In `index.html`, set your project URL and **publishable (anon) key** in `SB`, and your Turnstile **site key** in `TS_KEY`.
    Only ever use the publishable key in frontend code, never the `service_role` key or the Turnstile secret.
+   The Edge Function fails closed if `TURNSTILE_SECRET_KEY` is missing or `IP_SALT` is shorter than 32 characters.
 5. Visit `/admin`, sign in and approve guestbook notes (new notes start as *pending*).
 
 Security headers (including a Content-Security-Policy and HSTS) are in `vercel.json`. If you add a new
