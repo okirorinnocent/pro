@@ -1375,6 +1375,125 @@
     .gb-item small { color: var(--muted) }
     .privacy { margin-top: 10px; font-size: .8rem }
     #ts-box, #ts-gbox { min-height: 65px; margin: 4px 0 12px }
+
+    /* small refinements that keep the existing visual language consistent */
+    ::selection {
+      background: color-mix(in srgb, var(--accent) 35%, transparent);
+      color: var(--text)
+    }
+
+    .hero {
+      padding-top: 40px
+    }
+
+    .hero-grid {
+      align-items: start
+    }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px
+    }
+
+    .hero .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor
+    }
+
+    .hero p.lead {
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      line-height: 1.75
+    }
+
+    .actions .btn {
+      min-height: 48px
+    }
+
+    .profile-card {
+      position: sticky;
+      top: 104px
+    }
+
+    .section-head {
+      max-width: 100%
+    }
+
+    .section-head > div:first-child {
+      min-width: 0
+    }
+
+    .projects-grid .project-card {
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .12)
+    }
+
+    .project-thumb {
+      transition: transform .35s ease, filter .35s ease
+    }
+
+    .project-card:hover .project-thumb,
+    .project-card:focus-visible .project-thumb {
+      transform: scale(1.025);
+      filter: saturate(1.08)
+    }
+
+    .project-body .btn {
+      margin-top: 14px
+    }
+
+    .project-body .btn + .btn {
+      margin-left: 6px
+    }
+
+    .fchips button.on,
+    .fchips button:focus-visible {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent)
+    }
+
+    input:user-invalid,
+    textarea:user-invalid {
+      border-color: #f87171
+    }
+
+    @media(max-width:760px) {
+      .hero {
+        padding-top: 24px
+      }
+
+      .profile-card {
+        position: static
+      }
+
+      .nav-social {
+        display: none
+      }
+    }
+
+    @media(max-width:500px) {
+      h1 {
+        font-size: clamp(2.45rem, 14vw, 3.5rem)
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr
+      }
+
+      .actions .btn {
+        width: 100%
+      }
+
+      .project-body .btn {
+        width: 100%;
+        margin-left: 0
+      }
+
+      .project-body .btn + .btn {
+        margin-left: 0
+      }
+    }
   </style>
 </head>
 
@@ -1409,7 +1528,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <noscript>
       <section class="container" style="padding:40px 0">
         <h2>Innocent Okiror · BSc Computer Science, MUST, Uganda</h2>
@@ -1422,14 +1541,16 @@
         <div>
           <div class="eyebrow">BSc Computer Science · MUST, Uganda</div>
           <h1>Hi, I'm <span>Innocent Okiror.</span></h1>
-          <p class="lead">I build AI assistants, machine learning apps and data pipelines, and I'm learning to make them
-            secure and dependable for businesses in Uganda and beyond.</p>
+          <p class="lead">I'm a Computer Science student building AI assistants, machine learning apps and data
+            pipelines. I'm open to junior software development opportunities, IT internships and practical technology
+            collaborations in Uganda and beyond.</p>
           <div class="chips"><span class="chip">Python</span><span class="chip">Streamlit</span><span
               class="chip">Machine Learning</span><span class="chip">Supabase</span></div>
           <div class="actions">
-            <a class="btn primary" href="#what-i-do">See what I do ↗</a>
+            <a class="btn primary" href="#projects">View projects ↗</a>
             <a class="btn secondary" href="#contact">Contact me</a>
             <a class="btn secondary" href="my_cv.pdf" download="Innocent_Okiror_CV.pdf">Download CV ↓</a>
+            <a class="btn secondary" href="#certificates">View certificates</a>
           </div>
           <div class="socials" id="soc"></div>
           <div class="building"><strong>Currently building</strong>
@@ -1642,9 +1763,9 @@
           <div class="card">
             <form id="gform" novalidate>
               <label for="gn">Your name<input id="gn" maxlength="40" autocomplete="name"
-                  placeholder="GitCommit To Truth"></label>
+                  placeholder="GitCommit To Truth" required></label>
               <label for="gm">Message<textarea id="gm" maxlength="280"
-                  placeholder="Say hi or leave a thought..."></textarea></label>
+                  placeholder="Say hi or leave a thought..." required></textarea></label>
               <input class="hp" id="gh" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div id="ts-gbox" aria-label="Security verification"></div>
               <button class="btn primary" type="submit">Post message</button>
@@ -1680,11 +1801,11 @@
             <p style="margin:5px 0 20px">I'll reply to the email address you enter below.</p>
             <form id="cform" novalidate>
               <label for="cn">Your name<input id="cn" maxlength="80" autocomplete="name"
-                  placeholder="GitCommit To Truth"></label>
+                  placeholder="GitCommit To Truth" required></label>
               <label for="ce">Your email<input id="ce" type="email" maxlength="120" autocomplete="email"
-                  placeholder="gitcommit@example.com"></label>
+                  placeholder="gitcommit@example.com" required></label>
               <label for="cm">Message<textarea id="cm" maxlength="1500"
-                  placeholder="Tell me a little about your idea..."></textarea></label>
+                  placeholder="Tell me a little about your idea..." required></textarea></label>
               <input class="hp" id="ch" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div id="ts-box" aria-label="Security verification"></div>
               <button class="btn primary" type="submit">Send message ↗</button>
@@ -1834,7 +1955,7 @@
     const tags = k => `<div class="tag-row">${k.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div>`;
     $("#wgrid").innerHTML = WHAT.map(w => `<article class="card hov reveal"><div class="card-icon" aria-hidden="true">${w.ic}</div><h3>${esc(w.t)}</h3><p>${esc(w.d)}</p></article>`).join("");
     $("#skgrid").innerHTML = SKILLS.map(s => `<article class="card hov skill-card reveal"><div class="card-icon" aria-hidden="true">${s.ic}</div><h3>${esc(s.t)} <span class="lvl">${esc(s.lv)}</span></h3><p>${esc(s.d)}</p>${tags(s.k)}</article>`).join("");
-    $("#pgrid").innerHTML = PROJECTS.map((p, k) => `<article class="card project-card reveal" tabindex="0" role="button" data-project="${k}" aria-label="View details for ${esc(p.t)}"><img class="project-thumb" src="${p.image}" alt="${esc(p.alt)}" width="640" height="360" loading="lazy"><div class="project-body"><h3>${esc(p.t)}</h3><p>${esc(p.problem)}</p>${tags(p.tech)}${p.live ? `<a class="btn primary sm" href="${p.live}" target="_blank" rel="noopener noreferrer" data-project-link>Open live project ↗</a>` : ""}${p.github ? `<a class="btn secondary sm" href="${p.github}" target="_blank" rel="noopener noreferrer" data-project-link>View on GitHub ↗</a>` : ""}</div></article>`).join("");
+    $("#pgrid").innerHTML = PROJECTS.map((p, k) => `<article class="card project-card reveal" tabindex="0" role="button" data-project="${k}" aria-label="View details for ${esc(p.t)}"><img class="project-thumb" src="${p.image}" alt="${esc(p.alt)}" width="640" height="360" loading="lazy" decoding="async"><div class="project-body"><h3>${esc(p.t)}</h3><p>${esc(p.problem)}</p>${tags(p.tech)}${p.live ? `<a class="btn primary sm" href="${p.live}" target="_blank" rel="noopener noreferrer" data-project-link>Open live project ↗</a>` : ""}${p.github ? `<a class="btn secondary sm" href="${p.github}" target="_blank" rel="noopener noreferrer" data-project-link>View on GitHub ↗</a>` : ""}</div></article>`).join("");
     $("#lgrid").innerHTML = [...LEARNING_LOG].sort((a, b) => new Date("1 " + b.date) - new Date("1 " + a.date)).map(l => `<article class="card learning-card"><time>${esc(l.date)}</time><h3>${esc(l.title)}</h3><p>${esc(l.summary)}</p></article>`).join("");
     if (TESTIMONIALS.length) $("#tgrid").innerHTML = TESTIMONIALS.map(t => `<article class="card"><p class="quote">“${esc(t.quote)}”</p><p style="margin-top:14px"><strong>${esc(t.name)}</strong><br><span class="mu">${esc(t.role)}</span></p></article>`).join("");
     else $("#testimonials").hidden = true;
