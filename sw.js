@@ -1,8 +1,9 @@
 /* Service worker: offline-capable app shell.
    Bump VERSION whenever you deploy changes so users get fresh files. */
-const VERSION = "v10";
+const VERSION = "v11";
 const CACHE = "io-portfolio-" + VERSION;
 const SHELL = ["./", "index.html", "pwa.js", "manifest.webmanifest", "profile.png", "school.webp",
+  "animations.js", "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js",
   "project-images/portfolio.webp", "project-images/SafeShare.webp", "project-images/pharmacy.webp",
   "project-images/casmi26.webp", "project-images/basel.webp", "project-images/waste-sorter.webp",
   "icons/icon-192.png?v=2", "icons/icon-512.png?v=2", "icons/icon-maskable-512.png?v=2", "icons/apple-touch-icon.png"];

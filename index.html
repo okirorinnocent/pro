@@ -1366,6 +1366,118 @@
         transform: none
       }
     }
+
+    /* ANIMATION LAYER */
+    .hero-badges {
+      position: absolute;
+      inset: 0;
+      pointer-events: none
+    }
+
+    .tech-badge {
+      position: absolute;
+      z-index: 3;
+      display: inline-grid;
+      place-items: center;
+      min-width: 48px;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 82%, transparent);
+      color: var(--text);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .12);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+      backdrop-filter: blur(8px);
+      animation: tech-float 8s ease-in-out infinite
+    }
+
+    .tech-badge:nth-child(1) {
+      left: -18px;
+      top: 36%
+    }
+
+    .tech-badge:nth-child(2) {
+      right: -18px;
+      top: 18%;
+      animation-duration: 9s;
+      animation-delay: -2s
+    }
+
+    .tech-badge:nth-child(3) {
+      right: 4%;
+      bottom: 18%;
+      animation-duration: 7s;
+      animation-delay: -4s
+    }
+
+    .tech-badge:nth-child(4) {
+      left: 6%;
+      bottom: 8%;
+      animation-duration: 10s;
+      animation-delay: -5s
+    }
+
+    .tech-badge:nth-child(5) {
+      right: -8px;
+      top: 52%;
+      animation-duration: 8.5s;
+      animation-delay: -1s
+    }
+
+    .tech-badge:nth-child(6) {
+      left: 18%;
+      top: 10%;
+      animation-duration: 9.5s;
+      animation-delay: -3s
+    }
+
+    @keyframes tech-float {
+      0%, 100% {
+        transform: translateY(-3px)
+      }
+      50% {
+        transform: translateY(5px)
+      }
+    }
+
+    .hero-badges.paused .tech-badge {
+      animation-play-state: paused
+    }
+
+    .hero-word {
+      color: var(--text)
+    }
+
+    .hero-word.hero-accent {
+      color: var(--accent)
+    }
+
+    .gsap-ready.fx-hero .hero-word {
+      opacity: 0
+    }
+
+    @media(max-width:767px) {
+      .tech-badge:nth-child(3),
+      .tech-badge:nth-child(5),
+      .tech-badge:nth-child(6) {
+        display: none
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .tech-badge,
+      .hero-badges {
+        animation: none;
+        display: none
+      }
+
+      .gsap-ready.fx-hero .hero-word {
+        opacity: 1
+      }
+    }
   
     /* guestbook list, privacy notes, turnstile boxes */
     .gb-list { display: grid; gap: 14px; margin-top: 12px }
@@ -1540,7 +1652,7 @@
       <div class="container hero-grid">
         <div>
           <div class="eyebrow">BSc Computer Science · MUST, Uganda</div>
-          <h1>Hi, I'm <span>Innocent Okiror.</span></h1>
+          <h1 aria-label="Hi, I'm Innocent Okiror."><span class="hero-word" aria-hidden="true">Hi,</span> <span class="hero-word" aria-hidden="true">I'm</span> <span class="hero-word hero-accent" aria-hidden="true">Innocent</span> <span class="hero-word hero-accent" aria-hidden="true">Okiror.</span></h1>
           <p class="lead">I'm a Computer Science student building AI assistants, machine learning apps and data
             pipelines. I'm open to junior software development opportunities, IT internships and practical technology
             collaborations in Uganda and beyond.</p>
@@ -1567,6 +1679,14 @@
           </div>
         </div>
         <aside class="profile-card">
+          <div class="hero-badges" aria-hidden="true">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">ML</span>
+            <span class="tech-badge">Streamlit</span>
+            <span class="tech-badge">Supabase</span>
+            <span class="tech-badge">JS</span>
+            <span class="tech-badge">SQL</span>
+          </div>
           <div class="avatar"><img src="profile.png" alt="Portrait of Innocent Okiror" width="380" height="475"
               fetchpriority="high"></div>
           <div class="profile-meta">
@@ -1849,6 +1969,9 @@
   </footer>
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+  <script defer src="vendor/gsap.min.js"></script>
+  <script defer src="vendor/ScrollTrigger.min.js"></script>
+  <script defer src="animations.js"></script>
     <script>
     /* ===== EDIT ME ===== */
     const SB = { url: "https://oggnhlnsfgfcfgppuvuh.supabase.co", key: "sb_publishable_u0f65Ghe6cQjFubMF0Q1wQ_--Q9FJM8" }; // publishable (anon) key ONLY
